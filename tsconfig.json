@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "outDir": "./build/",
+    "sourceMap": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "baseUrl": "./",
+      },
+      
+  "files": [
+        "./src/index.tsx"
+    ],
+  
+  "exclude": [
+    "node_modules",
+    "build"
+  ],
+  
+}
+
+
+      
+    
+    
+
+
