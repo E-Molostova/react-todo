@@ -6,6 +6,7 @@ import { TodoListStyled } from './TodoListSyled';
 
 interface Todo {
   _id: string;
+  id?: string;
   description: string;
   completed: boolean;
 }
@@ -16,7 +17,12 @@ const TodoList = () => {
   return (
     <TodoListStyled>
       {todos.map(({ _id, description, completed }: Todo) => (
-        <TodoItem key={_id} description={description} completed={completed} />
+        <TodoItem
+          key={_id}
+          id={_id}
+          description={description}
+          completed={completed}
+        />
       ))}
     </TodoListStyled>
   );

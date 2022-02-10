@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../../redux/todos/todos-actions';
+import { addTodoSuccess } from '../../redux/todos/todos-actions';
 import { FormStyled } from './TodoFormStyled';
 
 // type Text = string;
@@ -10,13 +10,20 @@ const TodoForm = () => {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(fetchTodosSuccess);
+  // }, [dispatch]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setText(e.target.value.trim());
   };
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addTodo(text));
+    if (!text) {
+      alert('Enter task description please!');
+    }
+    dispatch(addTodoSuccess(text));
     e.currentTarget.reset();
   };
 

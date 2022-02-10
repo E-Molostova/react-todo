@@ -9,13 +9,13 @@ interface Action {
 
 const todos = (state: [] = [], action: Action) => {
   switch (action.type) {
-    case types.FETCH:
+    case types.fetchSuccess:
       return [...state, ...action.payload];
 
-    case types.ADD:
+    case types.addSuccess:
       return [...state, action.payload];
 
-    case types.DELETE:
+    case types.deleteSuccess:
       return state.filter(({ id }) => id !== action.payload);
 
     // case types.TOGGLE:
@@ -31,29 +31,35 @@ const todos = (state: [] = [], action: Action) => {
   }
 };
 
-// const loading = (state = false, action:Action) => {
-//   switch (action.type) {
-//     case :
-//       return state=true;
+const loading = (state = false, action: Action) => {
+  switch (action.type) {
+    case types.fetchRequst:
+      return (state = true);
+    case types.fetchSuccess:
+      return (state = false);
+    case types.fetchError:
+      return (state = true);
 
-//     default:
-//       return state;
-//   }
-// };
+    case types.addRequest:
+      return (state = true);
+    case types.addSuccess:
+      return (state = false);
+    case types.addError:
+      return (state = true);
 
-// const loading = createReducer(false, {
-//   [fetchContactsRequest]: () => true,
-//   [fetchContactsSuccess]: () => false,
-//   [fetchContactsError]: () => false,
-//   [addContactRequest]: () => true,
-//   [addContactSuccess]: () => false,
-//   [addContactError]: () => false,
-//   [deleteContactRequest]: () => true,
-//   [deleteContactSuccess]: () => false,
-//   [deleteContactError]: () => false,
-// });
+    case types.deleteRequest:
+      return (state = true);
+    case types.deleteSuccess:
+      return (state = false);
+    case types.deleteError:
+      return (state = true);
+
+    default:
+      return state;
+  }
+};
 
 export default combineReducers({
   todos,
-  //   loading,
+  loading,
 });
