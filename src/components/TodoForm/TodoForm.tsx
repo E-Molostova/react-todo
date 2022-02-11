@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodoSuccess } from '../../redux/todos/todos-actions';
+import { addTodoRequest } from '../../redux/todos/todos-actions';
 import { FormStyled } from './TodoFormStyled';
 
 // type Text = string;
@@ -23,7 +23,7 @@ const TodoForm = () => {
     if (!text) {
       alert('Enter task description please!');
     }
-    dispatch(addTodoSuccess(text));
+    dispatch(addTodoRequest(text));
     e.currentTarget.reset();
   };
 

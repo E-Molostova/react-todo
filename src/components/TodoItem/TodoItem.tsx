@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTodoAction } from '../../redux/todos/todos-actions';
+import { deleteTodoSuccess } from '../../redux/todos/todos-actions';
 import DeleteBtn from '../SvgComponents/DeleteBtn';
 import { TodoItemStyled } from './TodoItemStyled';
 
@@ -14,15 +14,15 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleDeleteTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    dispatch(deleteTodoAction(id));
+    dispatch(deleteTodoSuccess(id));
   };
 
   return (
     <TodoItemStyled id={id}>
       <input type="checkbox" checked={completed} />
       <p className="description">{description}</p>
-      <button type="button" className="deleteBtn">
-        <DeleteBtn onClick={handleDeleteTodo} />
+      <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
+        <DeleteBtn />
       </button>
     </TodoItemStyled>
   );

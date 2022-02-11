@@ -1,5 +1,15 @@
 import types from './todos-types';
 
+// const AddTodo = {
+//   types: {
+//     REQUEST: 'REQUEST',
+//   },
+//   request: (data: any) => {
+//     type: 'REQUEST'
+//     payload: data
+//   }
+// };
+
 export const fetchTodosSuccess = (data: any) => ({
   type: types.fetchSuccess,
   payload: data,
@@ -14,21 +24,27 @@ export const fetchTodosError = () => ({
 
 export const addTodoSuccess = (text: string) => ({
   type: types.addSuccess,
+  payload: text,
+});
+
+export const addTodoRequest = (text: string) => ({
+  type: types.addRequest,
   payload: {
     description: text,
   },
-});
-
-export const addTodoRequest = () => ({
-  type: types.addRequest,
 });
 export const addTodoError = () => ({
   type: types.addError,
 });
 
-export const deleteTodoAction = (todoId: string) => ({
+export const deleteTodoSuccess = (todoId: string) => ({
   type: types.deleteSuccess,
   payload: todoId,
 });
 
-// export const;
+export const deleteTodoRequest = () => ({
+  type: types.deleteRequest,
+});
+export const deleteTodoError = () => ({
+  type: types.deleteError,
+});
