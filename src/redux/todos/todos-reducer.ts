@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { combineReducers } from 'redux';
 import types from './todos-types';
 
@@ -10,13 +12,13 @@ interface Action {
 const todos = (state: [] = [], action: Action) => {
   switch (action.type) {
     case types.fetchSuccess:
-      return [...state, ...action.payload];
+      return [...action.payload];
 
     case types.addSuccess:
       return [...state, action.payload];
 
-    // case types.deleteSuccess:
-    //   return state.filter(({ id }) => id !== action.payload);
+    case types.deleteSuccess:
+      return state.filter(todo => todo._id !== action.payload);
 
     // case types.TOGGLE:
     //   return state.map(({ id }) => {

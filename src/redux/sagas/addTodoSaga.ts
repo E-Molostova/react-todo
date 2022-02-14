@@ -1,36 +1,28 @@
 //@ts-nocheck
 
-import { fork, put, takeEvery } from 'redux-saga/effects';
-import {
-  addTodoRequest,
-  addTodoError,
-  addTodoSuccess,
-  fetchTodosSuccess,
-} from '../todos/todos-actions';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { addTodo, fetchTodo } from '../todos/todos-actions';
 import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
-const addTodo = async action => {
-  const { data } = await axios.post('/todos', action.payload);
+const addTodoToServer = async action => {
+  await axios.post('/todos', action.payload);
+};
+
+const getTodosFromServer = async () => {
+  const { data } = await axios.get('/todos');
   return data;
 };
 
 export function* workerAddTodo(action) {
   try {
-    // yield put(addTodoRequest());
-    console.log(action);
-    yield put(addTodoSuccess(action.payload));
-    const data = yield call(addTodo, action);
-    console.log(data);
-    // yield put(fetchTodosSuccess(data));
-    //     const data: ResponseGenerator = yield call(getTodos);
-    //     yield put(fetchTodosSuccess(data));
-
-    // yield put(addTodoRequest());
-    // yield call(addTodo, action.payload);
-  } catch (error) {
-    // yield put(addTodoError());
+    yield call(addTodoToServer, action);
+    // yield put(addTodo.success(action.payload));
+    const data = yield call(getTodosFromServer);
+    yield put(fetchTodo.success(data));
+  } catch (e) {
+    yield put(addTodo.error(action.payload));
   }
 }
 

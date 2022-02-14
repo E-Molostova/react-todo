@@ -4,23 +4,23 @@ import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
-// interface ResponseGenerator {
-//   config?: any;
-//   data?: any;
-//   headers?: any;
-//   request?: any;
-//   status?: number;
-//   statusText?: string;
-// }
+interface ResponseGenerator {
+  config?: any;
+  data?: any;
+  headers?: any;
+  request?: any;
+  status?: number;
+  statusText?: string;
+}
 
-const getTodos = async () => {
+const getTodosFromServer = async () => {
   const { data } = await axios.get('/todos');
   return data;
 };
 
-export function* workerFetchTodos(action) {
+export function* workerFetchTodos(action: any) {
   try {
-    const data = yield call(getTodos);
+    const data: ResponseGenerator = yield call(getTodosFromServer);
     yield put(fetchTodo.success(data));
   } catch (e) {
     yield put(fetchTodo.error(action.payload));

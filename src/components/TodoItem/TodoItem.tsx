@@ -10,12 +10,13 @@ interface Props {
   description: string;
   completed: boolean;
 }
+
 const TodoItem = ({ id, description, completed }: Props) => {
   const dispatch = useDispatch();
 
   const handleDeleteTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    dispatch(deleteTodoSuccess(id));
+    dispatch(deleteTodo.request(id));
   };
 
   return (
@@ -57,13 +58,11 @@ const TodoItemStyled = styled.li`
     border: none;
     background-color: inherit;
     opacity: 0;
-    /* color: rgb(199, 28, 28); */
     padding-right: 15px;
   }
 `;
 
 const TextStyled = styled.p`
-  /* padding: 15px; */
   word-break: break-word;
   padding-right: 5px;
 

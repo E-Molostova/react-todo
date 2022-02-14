@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import types from '../../redux/todos/todos-types';
-import { addTodoRequest, fetchTodo } from '../../redux/todos/todos-actions';
+import { addTodo, fetchTodo } from '../../redux/todos/todos-actions';
 import styled from 'styled-components';
 
 const TodoForm = () => {
@@ -23,7 +23,7 @@ const TodoForm = () => {
     if (!text) {
       alert('Enter task description please!');
     }
-    // dispatch(addTodoRequest(text));
+    dispatch(addTodo.request(text));
     e.currentTarget.reset();
   };
 

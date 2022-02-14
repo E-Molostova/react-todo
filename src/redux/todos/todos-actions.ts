@@ -44,20 +44,21 @@ export const addTodo = {
 };
 
 export const deleteTodo = {
-  request: () => {
+  request: (todoId: string) => {
     return {
-      type: types.addRequest,
+      type: types.deleteRequest,
+      payload: todoId,
     };
   },
   success: (todoId: string) => {
     return {
-      type: types.addSuccess,
+      type: types.deleteSuccess,
       payload: todoId,
     };
   },
   error: (data: any) => {
     return {
-      type: types.addError,
+      type: types.deleteError,
       payload: data,
     };
   },
