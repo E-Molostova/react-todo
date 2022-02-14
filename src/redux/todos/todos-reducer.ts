@@ -15,8 +15,8 @@ const todos = (state: [] = [], action: Action) => {
     case types.addSuccess:
       return [...state, action.payload];
 
-    case types.deleteSuccess:
-      return state.filter(({ id }) => id !== action.payload);
+    // case types.deleteSuccess:
+    //   return state.filter(({ id }) => id !== action.payload);
 
     // case types.TOGGLE:
     //   return state.map(({ id }) => {
@@ -33,7 +33,7 @@ const todos = (state: [] = [], action: Action) => {
 
 const loading = (state = false, action: Action) => {
   switch (action.type) {
-    case types.fetchRequst:
+    case types.fetchRequest:
       return (state = true);
     case types.fetchSuccess:
       return (state = false);

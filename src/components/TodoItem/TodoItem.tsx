@@ -1,8 +1,9 @@
+//@ts-nocheck
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTodoSuccess } from '../../redux/todos/todos-actions';
+import { deleteTodo } from '../../redux/todos/todos-actions';
 import DeleteBtn from '../SvgComponents/DeleteBtn';
-import { TodoItemStyled } from './TodoItemStyled';
+import styled from 'styled-components';
 
 interface Props {
   id: string;
@@ -20,12 +21,60 @@ const TodoItem = ({ id, description, completed }: Props) => {
   return (
     <TodoItemStyled id={id}>
       <input type="checkbox" checked={completed} />
-      <p className="description">{description}</p>
+      <TextStyled>{description}</TextStyled>
       <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
         <DeleteBtn />
       </button>
     </TodoItemStyled>
   );
 };
+
+const TodoItemStyled = styled.li`
+  display: flex;
+  align-items: center;
+  width: 550px;
+  height: 65px;
+  color: #4d4d4d;
+  font-size: 24px;
+  padding-left: 15px;
+  background-color: #fff;
+  border-bottom: solid 1px lightgray;
+  height: 100%;
+
+  &:hover .deleteBtn,
+  &:focus .deleteBtn {
+    opacity: 1;
+    padding-right: 15px;
+  }
+
+  .todoCompleted {
+    text-decoration: line-through;
+    color: rgb(177, 172, 172);
+  }
+
+  .deleteBtn {
+    margin-left: auto;
+    border: none;
+    background-color: inherit;
+    opacity: 0;
+    /* color: rgb(199, 28, 28); */
+    padding-right: 15px;
+  }
+`;
+
+const TextStyled = styled.p`
+  /* padding: 15px; */
+  word-break: break-word;
+  padding-right: 5px;
+
+  &[contenteditable] {
+    width: 100%;
+    margin-left: 40px;
+    outline: none;
+    box-shadow: inset 0px 0px 10px 0px gray;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;
 
 export default TodoItem;

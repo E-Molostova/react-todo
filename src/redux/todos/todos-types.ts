@@ -1,5 +1,5 @@
 export default {
-  fetchRequst: 'todos/fetchRequest',
+  fetchRequest: 'todos/fetchRequest',
   fetchSuccess: 'todos/fetchSuccess',
   fetchError: 'todos/fetchError',
 
