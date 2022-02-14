@@ -20,13 +20,13 @@ const todos = (state: [] = [], action: Action) => {
     case types.deleteSuccess:
       return state.filter(todo => todo._id !== action.payload);
 
-    // case types.TOGGLE:
-    //   return state.map(({ id }) => {
-    //     if (id === action.id) {
-    //       return { ...todo, completed: !todo.completed };
-    //     }
-    //     return todo;
-    //   });
+    case types.toggleSuccess:
+      return state.map(todo => {
+        if (todo._id === action.payload) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      });
 
     default:
       return state;

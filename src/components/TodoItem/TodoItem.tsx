@@ -1,8 +1,10 @@
 //@ts-nocheck
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTodo } from '../../redux/todos/todos-actions';
+import { deleteTodo, toggleTodo } from '../../redux/todos/todos-actions';
 import DeleteBtn from '../SvgComponents/DeleteBtn';
+import Check from '../SvgComponents/Check';
+import Circle from '../SvgComponents/Circle';
 import styled from 'styled-components';
 
 interface Props {
@@ -19,9 +21,20 @@ const TodoItem = ({ id, description, completed }: Props) => {
     dispatch(deleteTodo.request(id));
   };
 
+  const handleToggleTodo = (e: any) => {
+    const id = e.currentTarget.parentNode.id;
+    console.log(id);
+    dispatch(toggleTodo.request(id));
+  };
+
   return (
     <TodoItemStyled id={id}>
-      <input type="checkbox" checked={completed} />
+      {completed ? (
+        <Check onClick={handleToggleTodo} />
+      ) : (
+        <Circle onClick={handleToggleTodo} />
+      )}
+
       <TextStyled>{description}</TextStyled>
       <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
         <DeleteBtn />
@@ -65,6 +78,7 @@ const TodoItemStyled = styled.li`
 const TextStyled = styled.p`
   word-break: break-word;
   padding-right: 5px;
+  margin-left: 10px;
 
   &[contenteditable] {
     width: 100%;

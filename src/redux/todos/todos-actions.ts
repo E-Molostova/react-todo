@@ -63,3 +63,24 @@ export const deleteTodo = {
     };
   },
 };
+
+export const toggleTodo = {
+  request: (todoId: string) => {
+    return {
+      type: types.toggleRequest,
+      payload: todoId,
+    };
+  },
+  success: (todoId: string) => {
+    return {
+      type: types.toggleSuccess,
+      payload: todoId,
+    };
+  },
+  error: (data: any) => {
+    return {
+      type: types.toggleError,
+      payload: data,
+    };
+  },
+};
