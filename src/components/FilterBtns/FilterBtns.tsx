@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getTodos } from '../..//redux/todos/todos-selectors';
+// import { getTodos } from '../..//redux/todos/todos-selectors';
 
 const FilterBtns = () => {
-  const todos = useSelector(getTodos);
-  console.log('todos in filter', todos);
+  //   const todos = useSelector(getTodos);
+  //   console.log('todos in filter', todos);
 
   return (
     <div>

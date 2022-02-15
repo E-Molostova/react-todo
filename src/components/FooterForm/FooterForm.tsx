@@ -1,17 +1,28 @@
 import React from 'react';
-import ActiveQuantity from "../ActiveQuantity";
+import ActiveQuantity from '../ActiveQuantity';
 import FilterBtns from '../FilterBtns';
 import ClearBtn from '../ClearBtn';
-import {FooterDiv} from "./FooterFormStyled"
+import styled from 'styled-components';
 
 const FooterForm = () => {
   return (
     <FooterDiv>
-      <ActiveQuantity/>
+      <ActiveQuantity />
       <FilterBtns />
-      <ClearBtn/>
+      <ClearBtn />
     </FooterDiv>
   );
 };
+
+ const FooterDiv = styled.div`
+  width: 550px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px;
+  margin: 0 auto;
+`;
+
 
 export default FooterForm;

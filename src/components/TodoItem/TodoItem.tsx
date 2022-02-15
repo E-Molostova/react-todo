@@ -1,11 +1,12 @@
 //@ts-nocheck
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteTodo, toggleTodo } from '../../redux/todos/todos-actions';
 import DeleteBtn from '../SvgComponents/DeleteBtn';
 import Check from '../SvgComponents/Check';
 import Circle from '../SvgComponents/Circle';
 import styled from 'styled-components';
+import { getTodos } from '../../redux/todos/todos-selectors';
 
 interface Props {
   id: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const TodoItem = ({ id, description, completed }: Props) => {
+  const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
   const handleDeleteTodo = (e: any) => {
@@ -23,8 +25,9 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleToggleTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    console.log(id);
-    dispatch(toggleTodo.request(id));
+    const item = todos.find(todo => todo._id === id);
+    console.log('item', item);
+    dispatch(toggleTodo.request(id, item.completed));
   };
 
   return (

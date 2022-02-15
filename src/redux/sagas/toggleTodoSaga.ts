@@ -6,8 +6,11 @@ import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
-const toggleTodoToServer = async (id: string, todo: any) => {
-  return await axios.put(`/todos/${id}`, todo);
+const toggleTodoToServer = async action => {
+  const id = action.payload.todoId;
+  const body = action.payload.completed;
+  console.log(body);
+  return await axios.put(`/todos/${id}`, { completed: body });
 };
 
 const getTodosFromServer = async () => {
@@ -17,10 +20,10 @@ const getTodosFromServer = async () => {
 
 export function* workerToggleTodo(action) {
   try {
-    yield put(toggleTodo.success(action.payload));
-    yield call(toggleTodoToServer, action.payload);
+    // yield put(toggleTodo.success(action));
+    yield call(toggleTodoToServer, action);
     const data = yield call(getTodosFromServer);
-    // yield put(fetchTodo.success(data));
+    yield put(fetchTodo.success(data));
   } catch (e) {
     console.log(e);
     yield put(toggleTodo.error(e));
