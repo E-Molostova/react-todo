@@ -87,3 +87,42 @@ export const toggleTodo = {
     };
   },
 };
+
+export const allCompleted = {
+  request: () => {
+    return {
+      type: types.allCompletedRequest,
+    };
+  },
+  success: () => {
+    return {
+      type: types.allCompletedSuccess,
+      // payload: todoId,
+    };
+  },
+  error: (data: any) => {
+    return {
+      type: types.allCompletedError,
+      payload: data,
+    };
+  },
+};
+
+export const clearCompleted = {
+  request: () => {
+    return {
+      type: types.clearCompletedRequest,
+    };
+  },
+  success: () => {
+    return {
+      type: types.clearCompletedSuccess,
+      // payload: todoId,
+    };
+  },
+  error: () => {
+    return {
+      type: types.clearCompletedError,
+    };
+  },
+};

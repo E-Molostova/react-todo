@@ -26,7 +26,6 @@ const TodoItem = ({ id, description, completed }: Props) => {
   const handleToggleTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
     const item = todos.find(todo => todo._id === id);
-    console.log('item', item);
     dispatch(toggleTodo.request(id, item.completed));
   };
 

@@ -36,7 +36,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.5.3",
     "prettier": "^2.5.1",
-    "prop-types": "^15.8.1",
+    
     "redux-devtools-extension": "^2.13.9",
     "sass": "^1.49.7",
     "sass-loader": "^12.4.0",

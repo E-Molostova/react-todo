@@ -14,4 +14,12 @@ export default {
   toggleRequest: 'todos/toggleRequest',
   toggleSuccess: 'todos/toggleSuccess',
   toggleError: 'todos/toggleError',
+
+  allCompletedRequest: 'todos/allCompletedRequest',
+  allCompletedSuccess: 'todos/allCompletedSuccess',
+  allCompletedError: 'todos/allCompletedError',
+
+  clearCompletedRequest: 'todos/clearCompletedRequest',
+  clearCompletedSuccess: 'todos/clearCompletedSuccess',
+  clearCompletedError: 'todos/clearCompletedError',
 };

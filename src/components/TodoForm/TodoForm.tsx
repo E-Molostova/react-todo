@@ -1,13 +1,20 @@
 //@ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import types from '../../redux/todos/todos-types';
-import { addTodo, fetchTodo } from '../../redux/todos/todos-actions';
+import {
+  addTodo,
+  allCompleted,
+  fetchTodo,
+} from '../../redux/todos/todos-actions';
+import CheckAll from '../SvgComponents/CheckAll';
 import styled from 'styled-components';
+import { getTodos } from '../../redux/todos/todos-selectors';
 
 const TodoForm = () => {
   const [text, setText] = useState('');
 
+  const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +34,10 @@ const TodoForm = () => {
     e.currentTarget.reset();
   };
 
+  const handleAllCompleted = (e: any) => {
+    dispatch(allCompleted.request());
+  };
+
   return (
     <FormStyled onSubmit={handleSubmit}>
       <InputStyled
@@ -35,7 +46,10 @@ const TodoForm = () => {
         placeholder="What needs to be done?"
         className="mainInput"
         onChange={handleChange}
-      ></InputStyled>
+      />
+      <CheckAllStyled>
+        {todos.length !== 0 && <CheckAll onClick={handleAllCompleted} />}
+      </CheckAllStyled>
     </FormStyled>
   );
 };
@@ -65,6 +79,12 @@ const InputStyled = styled.input`
     font-size: 22px;
     color: rgb(177, 172, 172);
   }
+`;
+
+const CheckAllStyled = styled.div`
+  position: absolute;
+  top: 24px;
+  left: 16px;
 `;
 
 export default TodoForm;

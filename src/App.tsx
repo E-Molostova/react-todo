@@ -4,14 +4,17 @@ import Header from './components/Header';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import FooterForm from './components/FooterForm';
+import { useSelector } from 'react-redux';
+import { getTodos } from './redux/todos/todos-selectors';
 
 const App = () => {
+  const todos = useSelector(getTodos);
   return (
     <>
       <Header />
       <TodoForm />
       <TodoList />
-      <FooterForm />
+      {todos.length !== 0 && <FooterForm />}
     </>
   );
 };

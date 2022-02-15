@@ -27,6 +27,20 @@ const todos = (state: [] = [], action: Action) => {
         }
         return todo;
       });
+    case types.allCompletedSuccess:
+      const isAnyActive = state.some(todo => todo.completed === false);
+      let newTodos;
+      if (isAnyActive) {
+        newTodos = todos.map(todo => {
+          todo.completed = true;
+          return todo;
+        });
+      } else {
+        newTodos = todos.map(todo => {
+          todo.completed = false;
+          return todo;
+        });
+      }
 
     default:
       return state;

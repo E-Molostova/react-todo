@@ -9,7 +9,6 @@ axios.defaults.baseURL = 'http://localhost:8080';
 const toggleTodoToServer = async action => {
   const id = action.payload.todoId;
   const body = action.payload.completed;
-  console.log(body);
   return await axios.put(`/todos/${id}`, { completed: body });
 };
 
@@ -20,22 +19,13 @@ const getTodosFromServer = async () => {
 
 export function* workerToggleTodo(action) {
   try {
-    // yield put(toggleTodo.success(action));
     yield call(toggleTodoToServer, action);
+    yield put(toggleTodo.success(action));
     const data = yield call(getTodosFromServer);
     yield put(fetchTodo.success(data));
   } catch (e) {
-    console.log(e);
     yield put(toggleTodo.error(e));
   }
-  // try {
-  //   yield put(deleteTodo.success(action.payload));
-  //   yield call(deleteTodoFromServer, action.payload);
-  //   const data = yield call(getTodosFromServer);
-  //   yield put(fetchTodo.success(data));
-  // } catch (e) {
-  //   yield put(deleteTodo.error(e.message));
-  // }
 }
 
 export function* watchToggleTodo() {
