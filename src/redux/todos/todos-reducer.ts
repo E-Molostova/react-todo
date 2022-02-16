@@ -21,7 +21,7 @@ const todos = (state: [] = [], action: Action) => {
       return state.filter(todo => todo._id !== action.payload);
 
     case types.toggleSuccess:
-      return [...state, ...action.payload];
+      return [...action.payload];
 
     case types.allCompletedSuccess:
       return [...action.payload];
@@ -56,6 +56,37 @@ const loading = (state = false, action: Action) => {
     case types.deleteError:
       return (state = true);
 
+    case types.toggleRequest:
+      return (state = true);
+    case types.toggleSuccess:
+      return (state = false);
+    case types.toggleError:
+      return (state = true);
+
+    case types.clearCompletedRequest:
+      return (state = true);
+    case types.clearCompletedSuccess:
+      return (state = false);
+    case types.clearCompletedError:
+      return (state = true);
+
+    case types.allCompletedRequest:
+      return (state = true);
+    case types.allCompletedSuccess:
+      return (state = false);
+    case types.allCompletedError:
+      return (state = true);
+
+    default:
+      return state;
+  }
+};
+
+const filter = (state = 'all', action: Action) => {
+  switch (action.type) {
+    case types.fetchSuccess:
+      return (state = 'all');
+
     default:
       return state;
   }
@@ -64,4 +95,5 @@ const loading = (state = false, action: Action) => {
 export default combineReducers({
   todos,
   loading,
+  filter,
 });

@@ -15,8 +15,8 @@ const toggleTodoToServer = async action => {
 
 export function* workerToggleTodo(action) {
   try {
-    yield call(toggleTodoToServer, action);
-    yield put(toggleTodo.success(action));
+    const data = yield call(toggleTodoToServer, action);
+    yield put(toggleTodo.success(data));
   } catch (e) {
     yield put(toggleTodo.error(e));
   }

@@ -28,32 +28,30 @@ const TodoItem = ({ id, description, completed }: Props) => {
   };
 
   const handleEditing = (e: any) => {
-    if (e.target.tagName === 'P') {
-      const target = e.target;
-      console.log(target);
-      // const targetItem = e.target.parentNode;
-      // const label = targetItem.children[1];
-      // label.style.display = 'none';
-      // const btn = targetItem.children[3];
-      // btn.classList.add('editable');
+    const target = e.target;
+    console.log(target);
+    // const targetItem = e.target.parentNode;
+    // const label = targetItem.children[1];
+    // label.style.display = 'none';
+    // const btn = targetItem.children[3];
+    // btn.classList.add('editable');
 
-      // target.setAttribute('contenteditable', 'true');
+    // target.setAttribute('contenteditable', 'true');
 
-      // const editInput = React.createElement('input');
-      // target.appendChild(editInput);
-      // editInput.focus();
-      // editInput.value = target.innerText;
-      // target.innerText = editInput.value;
+    // const editInput = React.createElement('input');
+    // target.appendChild(editInput);
+    // editInput.focus();
+    // editInput.value = target.innerText;
+    // target.innerText = editInput.value;
 
-      // let [r, s] = [document.createRange(), window.getSelection()];
-      // r.selectNodeContents(e.target);
-      // r.collapse(false);
-      // s.removeAllRanges();
-      // s.addRange(r);
+    // let [r, s] = [document.createRange(), window.getSelection()];
+    // r.selectNodeContents(e.target);
+    // r.collapse(false);
+    // s.removeAllRanges();
+    // s.addRange(r);
 
-      // target.addEventListener('keydown', todoHandlers.handleEnterAndEscape);
-      // target.addEventListener('blur', todoHandlers.handleBlur);
-    }
+    // target.addEventListener('keydown', todoHandlers.handleEnterAndEscape);
+    // target.addEventListener('blur', todoHandlers.handleBlur);
   };
 
   return (
