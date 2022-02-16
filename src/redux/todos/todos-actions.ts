@@ -126,3 +126,16 @@ export const clearCompleted = {
     };
   },
 };
+
+export const setFilter = {
+  active: () => {
+    return {
+      type: types.setFilterActiveSuccess,
+    };
+  },
+  completed: () => {
+    return {
+      type: types.setFilterCompletedSuccess,
+    };
+  },
+};

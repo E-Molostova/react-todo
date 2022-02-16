@@ -86,6 +86,10 @@ const filter = (state = 'all', action: Action) => {
   switch (action.type) {
     case types.fetchSuccess:
       return (state = 'all');
+    case types.setFilterActiveSuccess:
+      return (state = 'active');
+    case types.setFilterCompletedSuccess:
+      return (state = 'completed');
 
     default:
       return state;

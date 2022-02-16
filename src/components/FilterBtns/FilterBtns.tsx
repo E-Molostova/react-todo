@@ -1,28 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getTodos } from '../..//redux/todos/todos-selectors';
+import { useDispatch } from 'react-redux';
+import { fetchTodo, setFilter } from '../../redux/todos/todos-actions';
 import styled from 'styled-components';
 
 const FilterBtns = () => {
-  const todos = useSelector(getTodos);
+  const dispatch = useDispatch();
 
   const handleFilter = (e: any) => {
     const { id } = e.target;
 
     switch (id) {
       case 'All':
-        console.log('show all');
-        console.log(todos);
+        dispatch(fetchTodo.request());
         break;
 
       case 'Active':
-        console.log('show active');
-        console.log(todos.filter((todo: any) => todo.completed === false));
+        dispatch(setFilter.active());
         break;
 
       case 'Completed':
-        console.log('show completed');
-        console.log(todos.filter((todo: any) => todo.completed === true));
+        dispatch(setFilter.completed());
         break;
 
       default:

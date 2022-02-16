@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getTodos } from '../../redux/todos/todos-selectors';
+import { getFilter, getTodos } from '../../redux/todos/todos-selectors';
 import TodoItem from '../TodoItem';
 import styled from 'styled-components';
 
@@ -12,17 +12,41 @@ interface Todo {
 
 const TodoList = () => {
   const todos = useSelector(getTodos);
+  const filter = useSelector(getFilter);
 
   return (
     <TodoListStyled>
-      {todos.map(({ _id, description, completed }: Todo) => (
-        <TodoItem
-          key={_id}
-          id={_id}
-          description={description}
-          completed={completed}
-        />
-      ))}
+      {filter === 'all' &&
+        todos.map(({ _id, description, completed }: Todo) => (
+          <TodoItem
+            key={_id}
+            id={_id}
+            description={description}
+            completed={completed}
+          />
+        ))}
+      {filter === 'active' &&
+        todos
+          .filter(({ completed }) => completed === false)
+          .map(({ _id, description, completed }: Todo) => (
+            <TodoItem
+              key={_id}
+              id={_id}
+              description={description}
+              completed={completed}
+            />
+          ))}
+      {filter === 'completed' &&
+        todos
+          .filter(({ completed }) => completed === true)
+          .map(({ _id, description, completed }: Todo) => (
+            <TodoItem
+              key={_id}
+              id={_id}
+              description={description}
+              completed={completed}
+            />
+          ))}
     </TodoListStyled>
   );
 };
