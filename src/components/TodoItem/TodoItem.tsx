@@ -2,11 +2,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTodo, toggleTodo } from '../../redux/todos/todos-actions';
-import DeleteBtn from '../SvgComponents/DeleteBtn';
-import Check from '../SvgComponents/Check';
-import Circle from '../SvgComponents/Circle';
-import styled from 'styled-components';
+import { Check, Circle, DeleteBtn } from '../SvgComponents';
 import { getTodos } from '../../redux/todos/todos-selectors';
+import styled from 'styled-components';
 
 interface Props {
   id: string;
@@ -25,8 +23,37 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleToggleTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    const item = todos.find(todo => todo._id === id);
+    const item = todos.find((todo: any) => todo._id === id);
     dispatch(toggleTodo.request(id, item.completed));
+  };
+
+  const handleEditing = (e: any) => {
+    if (e.target.tagName === 'P') {
+      const target = e.target;
+      console.log(target);
+      // const targetItem = e.target.parentNode;
+      // const label = targetItem.children[1];
+      // label.style.display = 'none';
+      // const btn = targetItem.children[3];
+      // btn.classList.add('editable');
+
+      // target.setAttribute('contenteditable', 'true');
+
+      // const editInput = React.createElement('input');
+      // target.appendChild(editInput);
+      // editInput.focus();
+      // editInput.value = target.innerText;
+      // target.innerText = editInput.value;
+
+      // let [r, s] = [document.createRange(), window.getSelection()];
+      // r.selectNodeContents(e.target);
+      // r.collapse(false);
+      // s.removeAllRanges();
+      // s.addRange(r);
+
+      // target.addEventListener('keydown', todoHandlers.handleEnterAndEscape);
+      // target.addEventListener('blur', todoHandlers.handleBlur);
+    }
   };
 
   return (
@@ -37,7 +64,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
         <Circle onClick={handleToggleTodo} />
       )}
 
-      <TextStyled>{description}</TextStyled>
+      <TextStyled onDoubleClick={handleEditing}>{description}</TextStyled>
       <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
         <DeleteBtn />
       </button>

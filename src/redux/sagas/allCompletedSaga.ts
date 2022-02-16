@@ -7,27 +7,15 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
 const allCompletedServer = async () => {
-  return await axios.put('todos/toggle-completed');
-};
-
-console.log(allCompletedServer());
-
-const getTodosFromServer = async () => {
-  const { data } = await axios.get('/todos');
+  const { data } = await axios.put('/todos/toggle-completed');
   return data;
 };
-
-console.log(getTodosFromServer());
 
 export function* workerAllCompleted() {
   try {
     const data = yield call(allCompletedServer);
-    console.log(data);
-    yield put(allCompleted.success());
-    // const data = yield call(getTodosFromServer);
-    // yield put(fetchTodo.success(data));
+    yield put(allCompleted.success(data));
   } catch (e) {
-    console.log(e);
     yield put(allCompleted.error(e));
   }
 }

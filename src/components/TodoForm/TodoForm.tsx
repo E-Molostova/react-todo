@@ -7,9 +7,9 @@ import {
   allCompleted,
   fetchTodo,
 } from '../../redux/todos/todos-actions';
-import CheckAll from '../SvgComponents/CheckAll';
-import styled from 'styled-components';
 import { getTodos } from '../../redux/todos/todos-selectors';
+import { CheckAll } from '../SvgComponents';
+import styled from 'styled-components';
 
 const TodoForm = () => {
   const [text, setText] = useState('');

@@ -7,25 +7,15 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
 const clearCompletedServer = async () => {
-  return await axios.delete('/todos/clear-completed');
-};
-
-const getTodosFromServer = async () => {
-  const { data } = await axios.get('/todos');
+  const { data } = await axios.delete('/todos/clear-completed');
   return data;
 };
 
-console.log(clearCompletedServer());
-
-export function* workerClearTodoCompleted(action) {
+export function* workerClearTodoCompleted() {
   try {
     const data = yield call(clearCompletedServer);
-    console.log(data);
-    yield put(clearCompleted.success());
-    // const data = yield call(getTodosFromServer);
-    // yield put(fetchTodo.success(data));
+    yield put(clearCompleted.success(data));
   } catch (e) {
-    console.log(e);
     yield put(clearCompleted.error(e));
   }
 }

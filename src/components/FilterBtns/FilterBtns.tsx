@@ -1,21 +1,44 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getTodos } from '../..//redux/todos/todos-selectors';
 import styled from 'styled-components';
-// import { getTodos } from '../..//redux/todos/todos-selectors';
 
 const FilterBtns = () => {
-  //   const todos = useSelector(getTodos);
-  //   console.log('todos in filter', todos);
+  const todos = useSelector(getTodos);
+
+  const handleFilter = (e: any) => {
+    const { id } = e.target;
+
+    switch (id) {
+      case 'All':
+        console.log('show all');
+        console.log(todos);
+        break;
+
+      case 'Active':
+        console.log('show active');
+        console.log(todos.filter((todo: any) => todo.completed === false));
+        break;
+
+      case 'Completed':
+        console.log('show completed');
+        console.log(todos.filter((todo: any) => todo.completed === true));
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <div>
-      <FilterBtn type="button" id="All">
+      <FilterBtn type="button" id="All" onClick={handleFilter}>
         All
       </FilterBtn>
-      <FilterBtn type="button" id="Active">
+      <FilterBtn type="button" id="Active" onClick={handleFilter}>
         Active
       </FilterBtn>
-      <FilterBtn type="button" id="Completed">
+      <FilterBtn type="button" id="Completed" onClick={handleFilter}>
         Completed
       </FilterBtn>
     </div>

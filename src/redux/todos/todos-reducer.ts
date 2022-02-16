@@ -15,32 +15,18 @@ const todos = (state: [] = [], action: Action) => {
       return [...action.payload];
 
     case types.addSuccess:
-      return [...state, action.payload];
+      return [...action.payload];
 
     case types.deleteSuccess:
       return state.filter(todo => todo._id !== action.payload);
 
     case types.toggleSuccess:
-      return state.map(todo => {
-        if (todo._id === action.payload) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      });
+      return [...state, ...action.payload];
+
     case types.allCompletedSuccess:
-      const isAnyActive = state.some(todo => todo.completed === false);
-      let newTodos;
-      if (isAnyActive) {
-        newTodos = todos.map(todo => {
-          todo.completed = true;
-          return todo;
-        });
-      } else {
-        newTodos = todos.map(todo => {
-          todo.completed = false;
-          return todo;
-        });
-      }
+      return [...action.payload];
+    case types.clearCompletedSuccess:
+      return [...action.payload];
 
     default:
       return state;

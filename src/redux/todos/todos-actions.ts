@@ -74,10 +74,10 @@ export const toggleTodo = {
       },
     };
   },
-  success: (todoId: string) => {
+  success: (data: any) => {
     return {
       type: types.toggleSuccess,
-      payload: todoId,
+      payload: data,
     };
   },
   error: (data: any) => {
@@ -94,10 +94,10 @@ export const allCompleted = {
       type: types.allCompletedRequest,
     };
   },
-  success: () => {
+  success: (data: any) => {
     return {
       type: types.allCompletedSuccess,
-      // payload: todoId,
+      payload: data,
     };
   },
   error: (data: any) => {
@@ -114,10 +114,10 @@ export const clearCompleted = {
       type: types.clearCompletedRequest,
     };
   },
-  success: () => {
+  success: (data: any) => {
     return {
       type: types.clearCompletedSuccess,
-      // payload: todoId,
+      payload: data,
     };
   },
   error: () => {
