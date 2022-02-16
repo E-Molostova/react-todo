@@ -1,8 +1,11 @@
+//@ts-nocheck
+
 import * as React from 'react';
 import { SVGProps } from 'react';
+import styled, { css } from 'styled-components';
 
 const Circle = (props: SVGProps<SVGSVGElement>) => (
-  <svg
+  <SVG
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     width={20}
@@ -16,7 +19,15 @@ const Circle = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <circle cx={12} cy={12} r={10} />
-  </svg>
+  </SVG>
 );
+
+const SVG = styled.svg`
+  ${props =>
+    props.dblClick &&
+    css`
+      display: none;
+    `}
+`;
 
 export default Circle;

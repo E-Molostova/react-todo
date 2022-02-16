@@ -5,6 +5,7 @@ import { watchDeleteTodo } from './deleteTodoSaga';
 import { watchToggleTodo } from './toggleTodoSaga';
 import { watchAllCompleted } from './allCompletedSaga';
 import { watchClearCompleted } from './clearCompletedSaga';
+import { watchEditTodo } from './editTextSaga';
 
 export default function* rootSaga() {
   yield spawn(watcherFetchTodos);
@@ -13,4 +14,5 @@ export default function* rootSaga() {
   yield spawn(watchToggleTodo);
   yield spawn(watchAllCompleted);
   yield spawn(watchClearCompleted);
+  yield spawn(watchEditTodo);
 }

@@ -13,19 +13,17 @@ const todos = (state: [] = [], action: Action) => {
   switch (action.type) {
     case types.fetchSuccess:
       return [...action.payload];
-
     case types.addSuccess:
       return [...action.payload];
-
     case types.deleteSuccess:
       return state.filter(todo => todo._id !== action.payload);
-
     case types.toggleSuccess:
       return [...action.payload];
-
     case types.allCompletedSuccess:
       return [...action.payload];
     case types.clearCompletedSuccess:
+      return [...action.payload];
+    case types.editSuccess:
       return [...action.payload];
 
     default:

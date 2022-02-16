@@ -1,8 +1,10 @@
+//@ts-nocheck
 import * as React from 'react';
 import { SVGProps } from 'react';
+import styled, { css } from 'styled-components';
 
 const Check = (props: SVGProps<SVGSVGElement>) => (
-  <svg
+  <SVG
     xmlns="http://www.w3.org/2000/svg"
     width={20}
     height={20}
@@ -16,7 +18,15 @@ const Check = (props: SVGProps<SVGSVGElement>) => (
   >
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
     <path d="M22 4 12 14.01l-3-3" />
-  </svg>
+  </SVG>
 );
+
+const SVG = styled.svg`
+  ${props =>
+    props.dblClick &&
+    css`
+      display: none;
+    `}
+`;
 
 export default Check;

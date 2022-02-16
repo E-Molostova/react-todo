@@ -25,4 +25,8 @@ export default {
 
   setFilterActiveSuccess: 'todos/setFilterActiveSucces',
   setFilterCompletedSuccess: 'todos/setFilterCompletedSucces',
+
+  editRequest: 'todos/editRequest',
+  editSuccess: 'todos/editSuccess',
+  editError: 'todos/editError',
 };

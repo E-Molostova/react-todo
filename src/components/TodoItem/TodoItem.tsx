@@ -1,10 +1,14 @@
 //@ts-nocheck
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTodo, toggleTodo } from '../../redux/todos/todos-actions';
+import {
+  deleteTodo,
+  editTodo,
+  toggleTodo,
+} from '../../redux/todos/todos-actions';
 import { Check, Circle, DeleteBtn } from '../SvgComponents';
 import { getTodos } from '../../redux/todos/todos-selectors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface Props {
   id: string;
@@ -13,6 +17,9 @@ interface Props {
 }
 
 const TodoItem = ({ id, description, completed }: Props) => {
+  const [dblClick, setDblClick] = useState(true);
+  const [text, setText] = useState('');
+
   const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
@@ -28,44 +35,62 @@ const TodoItem = ({ id, description, completed }: Props) => {
   };
 
   const handleEditing = (e: any) => {
-    const target = e.target;
-    console.log(target);
-    // const targetItem = e.target.parentNode;
-    // const label = targetItem.children[1];
-    // label.style.display = 'none';
-    // const btn = targetItem.children[3];
-    // btn.classList.add('editable');
+    setDblClick(false);
+  };
 
-    // target.setAttribute('contenteditable', 'true');
+  const handleChangeText = (e: any) => {
+    const id = e.currentTarget.parentNode.id;
+    setText(e.target.value);
+    dispatch(editTodo.request(id, text));
+  };
 
-    // const editInput = React.createElement('input');
-    // target.appendChild(editInput);
-    // editInput.focus();
-    // editInput.value = target.innerText;
-    // target.innerText = editInput.value;
+  const handleEnter = (e: any) => {
+    const id = e.currentTarget.parentNode.id;
+    if (e.key === 'Enter' || e.key === 'Escape') {
+      setDblClick(true);
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
-    // let [r, s] = [document.createRange(), window.getSelection()];
-    // r.selectNodeContents(e.target);
-    // r.collapse(false);
-    // s.removeAllRanges();
-    // s.addRange(r);
-
-    // target.addEventListener('keydown', todoHandlers.handleEnterAndEscape);
-    // target.addEventListener('blur', todoHandlers.handleBlur);
+  const handleBlur = (e: any) => {
+    const id = e.currentTarget.parentNode.id;
+    setDblClick(true);
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(editTodo.request(id, text));
   };
 
   return (
     <TodoItemStyled id={id}>
       {completed ? (
-        <Check onClick={handleToggleTodo} />
+        <Check dblClick={!dblClick} onClick={handleToggleTodo} />
       ) : (
-        <Circle onClick={handleToggleTodo} />
+        <Circle dblClick={!dblClick} onClick={handleToggleTodo} />
       )}
 
-      <TextStyled onDoubleClick={handleEditing}>{description}</TextStyled>
-      <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
-        <DeleteBtn />
-      </button>
+      {dblClick ? (
+        <TextStyled
+          onBlur={handleBlur}
+          completed={completed}
+          onDoubleClick={handleEditing}
+        >
+          {description}
+        </TextStyled>
+      ) : (
+        <InputStyled
+          type="text"
+          value={text}
+          onChange={handleChangeText}
+          onKeyDown={handleEnter}
+          onBlur={handleBlur}
+        />
+      )}
+      {dblClick && (
+        <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
+          <DeleteBtn />
+        </button>
+      )}
     </TodoItemStyled>
   );
 };
@@ -88,11 +113,6 @@ const TodoItemStyled = styled.li`
     padding-right: 15px;
   }
 
-  .todoCompleted {
-    text-decoration: line-through;
-    color: rgb(177, 172, 172);
-  }
-
   .deleteBtn {
     margin-left: auto;
     border: none;
@@ -107,14 +127,24 @@ const TextStyled = styled.p`
   padding-right: 5px;
   margin-left: 10px;
 
-  &[contenteditable] {
-    width: 100%;
-    margin-left: 40px;
-    outline: none;
-    box-shadow: inset 0px 0px 10px 0px gray;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+  ${props =>
+    props.completed &&
+    css`
+      text-decoration: line-through;
+      color: rgb(177, 172, 172);
+    `}
+`;
+
+const InputStyled = styled.input`
+  width: 100%;
+  padding: 15px;
+  padding-left: 0;
+  margin-left: 40px;
+  outline: none;
+  border: none;
+  box-shadow: inset 0px 0px 10px 0px gray;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export default TodoItem;

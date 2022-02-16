@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { toggleTodo, fetchTodo } from '../todos/todos-actions';
+import { toggleTodo } from '../todos/todos-actions';
 import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';

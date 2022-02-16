@@ -139,3 +139,27 @@ export const setFilter = {
     };
   },
 };
+
+export const editTodo = {
+  request: (id: any, description: string) => {
+    return {
+      type: types.editRequest,
+      payload: {
+        todoId: id,
+        newDescription: description,
+      },
+    };
+  },
+  success: (data: any) => {
+    return {
+      type: types.editSuccess,
+      payload: data,
+    };
+  },
+  error: (data: any) => {
+    return {
+      type: types.editError,
+      payload: data,
+    };
+  },
+};
