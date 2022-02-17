@@ -13,7 +13,6 @@ const TodosPage = () => {
   return (
     <Container>
       <Header />
-
       <TodoForm />
       <TodoList />
       {todos.length !== 0 && <FooterForm />}

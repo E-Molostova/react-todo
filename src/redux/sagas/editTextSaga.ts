@@ -6,19 +6,34 @@ import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
-const editTodoToServer = async action => {
+interface Action {
+  payload: {
+    todoId: string;
+    newDescription: string;
+  };
+}
+export interface ResponseGenerator {
+  config?: any;
+  data?: any;
+  headers?: any;
+  request?: any;
+  status?: number;
+  statusText?: string;
+}
+
+const editTodoToServer = async (action: Action) => {
   const id = action.payload.todoId;
   const body = action.payload.newDescription;
   const { data } = await axios.put(`/todos/${id}`, { description: body });
   return data;
 };
 
-export function* workerEditTodo(action) {
+export function* workerEditTodo(action: Action) {
   try {
-    const data = yield call(editTodoToServer, action);
+    const data: ResponseGenerator = yield call(editTodoToServer, action);
     yield put(editTodo.success(data));
   } catch (e) {
-    yield put(toggleTodo.error(e));
+    yield put(editTodo.error(e.message));
   }
 }
 

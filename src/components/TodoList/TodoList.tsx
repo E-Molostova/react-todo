@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getFilter, getTodos } from '../../redux/todos/todos-selectors';
+import { fetchTodo } from '../../redux/todos/todos-actions';
 import TodoItem from '../TodoItem';
 import styled from 'styled-components';
 
@@ -14,39 +15,38 @@ const TodoList = () => {
   const todos = useSelector(getTodos);
   const filter = useSelector(getFilter);
 
+  const dispatch = useDispatch();
+
+  const showTodos = () => {
+    if (filter === 'all') {
+      const todosToShow = todos;
+      return todosToShow;
+    }
+    if (filter === 'active') {
+      const todosToShow = todos.filter(({ completed }) => completed === false);
+      return todosToShow;
+    }
+    if (filter === 'completed') {
+      const todosToShow = todos.filter(({ completed }) => completed === true);
+      if (todosToShow.length === 0) {
+        dispatch(fetchTodo.request());
+        const todosToShow = todos;
+        return todosToShow;
+      }
+      return todosToShow;
+    }
+  };
+
   return (
     <TodoListStyled>
-      {filter === 'all' &&
-        todos.map(({ _id, description, completed }: Todo) => (
-          <TodoItem
-            key={_id}
-            id={_id}
-            description={description}
-            completed={completed}
-          />
-        ))}
-      {filter === 'active' &&
-        todos
-          .filter(({ completed }) => completed === false)
-          .map(({ _id, description, completed }: Todo) => (
-            <TodoItem
-              key={_id}
-              id={_id}
-              description={description}
-              completed={completed}
-            />
-          ))}
-      {filter === 'completed' &&
-        todos
-          .filter(({ completed }) => completed === true)
-          .map(({ _id, description, completed }: Todo) => (
-            <TodoItem
-              key={_id}
-              id={_id}
-              description={description}
-              completed={completed}
-            />
-          ))}
+      {showTodos().map(({ _id, description, completed }: Todo) => (
+        <TodoItem
+          key={_id}
+          id={_id}
+          description={description}
+          completed={completed}
+        />
+      ))}
     </TodoListStyled>
   );
 };

@@ -6,11 +6,13 @@ axios.defaults.baseURL = 'http://localhost:8080';
 
 interface Action {
   type: string;
-  payload: any;
+  payload: {
+    description: string;
+  };
 }
 
 const addTodoToServer = async (action: Action) => {
-  const { data }: any = await axios.post('/todos', action.payload);
+  const { data } = await axios.post('/todos', action.payload);
   return data;
 };
 

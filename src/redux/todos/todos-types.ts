@@ -23,7 +23,7 @@ export default {
   clearCompletedSuccess: 'todos/clearCompletedSuccess',
   clearCompletedError: 'todos/clearCompletedError',
 
-  setFilterActiveSuccess: 'todos/setFilterActiveSucces',
+  setFilterActiveSuccess: 'todos/setFilterActiveSuccess',
   setFilterCompletedSuccess: 'todos/setFilterCompletedSucces',
 
   editRequest: 'todos/editRequest',

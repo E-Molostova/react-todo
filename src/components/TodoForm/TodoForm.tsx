@@ -1,7 +1,5 @@
-//@ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import types from '../../redux/todos/todos-types';
 import {
   addTodo,
   allCompleted,
@@ -31,12 +29,17 @@ const TodoForm = () => {
       alert('Enter task description please!');
     }
     dispatch(addTodo.request(text));
+    dispatch(fetchTodo.request());
     e.currentTarget.reset();
   };
 
   const handleAllCompleted = (e: any) => {
     dispatch(allCompleted.request());
   };
+
+  const isAllCompleted = todos.every(
+    ({ completed }): boolean => completed === true,
+  );
 
   return (
     <FormStyled onSubmit={handleSubmit}>
@@ -48,7 +51,12 @@ const TodoForm = () => {
         onChange={handleChange}
       />
       <CheckAllStyled>
-        {todos.length !== 0 && <CheckAll onClick={handleAllCompleted} />}
+        {todos.length !== 0 && (
+          <CheckAll
+            onClick={handleAllCompleted}
+            isAllCompleted={isAllCompleted}
+          />
+        )}
       </CheckAllStyled>
     </FormStyled>
   );

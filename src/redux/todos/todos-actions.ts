@@ -128,7 +128,7 @@ export const clearCompleted = {
 };
 
 export const setFilter = {
-  active: () => {
+    active: () => {
     return {
       type: types.setFilterActiveSuccess,
     };

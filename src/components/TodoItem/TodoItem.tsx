@@ -5,9 +5,10 @@ import {
   deleteTodo,
   editTodo,
   toggleTodo,
+  fetchTodo,
 } from '../../redux/todos/todos-actions';
-import { Check, Circle, DeleteBtn } from '../SvgComponents';
 import { getTodos } from '../../redux/todos/todos-selectors';
+import { Check, Circle, DeleteBtn } from '../SvgComponents';
 import styled, { css } from 'styled-components';
 
 interface Props {
@@ -32,9 +33,11 @@ const TodoItem = ({ id, description, completed }: Props) => {
     const id = e.currentTarget.parentNode.id;
     const item = todos.find((todo: any) => todo._id === id);
     dispatch(toggleTodo.request(id, item.completed));
+    dispatch(fetchTodo.request());
   };
 
   const handleEditing = (e: any) => {
+    setText(e.target.textContent);
     setDblClick(false);
   };
 
@@ -55,10 +58,8 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleBlur = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    setDblClick(true);
-    e.preventDefault();
-    e.stopPropagation();
     dispatch(editTodo.request(id, text));
+    setDblClick(true);
   };
 
   return (
@@ -112,7 +113,6 @@ const TodoItemStyled = styled.li`
     opacity: 1;
     padding-right: 15px;
   }
-
   .deleteBtn {
     margin-left: auto;
     border: none;

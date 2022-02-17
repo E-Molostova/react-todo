@@ -5,7 +5,9 @@ import styled from 'styled-components';
 
 const ActiveQuantity = () => {
   const todos = useSelector(getTodos);
-  const quantity = todos.filter((todo: any) => todo.completed === false).length;
+  const quantity = todos.filter(
+    ({ completed }): boolean => completed === false,
+  ).length;
 
   return <QuantityStyled>{quantity} items left</QuantityStyled>;
 };
