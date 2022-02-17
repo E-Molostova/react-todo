@@ -1,22 +1,14 @@
-//@ts-nocheck
-
-import { combineReducers } from 'redux';
+import { combineReducers, AnyAction } from 'redux';
 import types from './todos-types';
 
-interface Action {
-  type: string;
-  payload: any;
-  id: any;
-}
-
-const todos = (state: [] = [], action: Action) => {
+const todos = (state: [] = [], action: AnyAction) => {
   switch (action.type) {
     case types.fetchSuccess:
       return [...action.payload];
     case types.addSuccess:
       return [...action.payload];
     case types.deleteSuccess:
-      return state.filter(todo => todo._id !== action.payload);
+      return state.filter(({ _id }): any => _id !== action.payload);
     case types.toggleSuccess:
       return [...action.payload];
     case types.allCompletedSuccess:
@@ -31,7 +23,7 @@ const todos = (state: [] = [], action: Action) => {
   }
 };
 
-const loading = (state = false, action: Action) => {
+const loading = (state = false, action: AnyAction) => {
   switch (action.type) {
     case types.fetchRequest:
       return (state = true);
@@ -80,7 +72,7 @@ const loading = (state = false, action: Action) => {
   }
 };
 
-const filter = (state = 'all', action: Action) => {
+const filter = (state = 'all', action: AnyAction) => {
   switch (action.type) {
     case types.fetchSuccess:
       return (state = 'all');

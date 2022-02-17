@@ -12,7 +12,7 @@ interface Action {
     newDescription: string;
   };
 }
-export interface ResponseGenerator {
+interface ResponseGenerator {
   config?: any;
   data?: any;
   headers?: any;

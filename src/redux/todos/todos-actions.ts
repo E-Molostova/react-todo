@@ -120,9 +120,10 @@ export const clearCompleted = {
       payload: data,
     };
   },
-  error: () => {
+  error: (data: any) => {
     return {
       type: types.clearCompletedError,
+      payload: data,
     };
   },
 };
