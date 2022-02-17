@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { deleteTodo } from '../todos/todos-actions';
 import types from '../todos/todos-types';
@@ -6,6 +5,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
 interface Action {
+  type: string;
   payload: string;
 }
 

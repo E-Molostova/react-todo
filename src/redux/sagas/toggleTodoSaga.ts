@@ -1,21 +1,35 @@
-//@ts-nocheck
-
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { toggleTodo } from '../todos/todos-actions';
 import types from '../todos/todos-types';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
 
-const toggleTodoToServer = async action => {
+interface Action {
+  type: string;
+  payload: {
+    todoId: string;
+    completed: boolean;
+  };
+}
+interface ResponseGenerator {
+  config?: any;
+  data?: any;
+  headers?: any;
+  request?: any;
+  status?: number;
+  statusText?: string;
+}
+
+const toggleTodoToServer = async (action: Action) => {
   const id = action.payload.todoId;
   const body = action.payload.completed;
   const { data } = await axios.put(`/todos/${id}`, { completed: body });
   return data;
 };
 
-export function* workerToggleTodo(action) {
+export function* workerToggleTodo(action: Action) {
   try {
-    const data = yield call(toggleTodoToServer, action);
+    const data: ResponseGenerator = yield call(toggleTodoToServer, action);
     yield put(toggleTodo.success(data));
   } catch (e) {
     yield put(toggleTodo.error(e));
