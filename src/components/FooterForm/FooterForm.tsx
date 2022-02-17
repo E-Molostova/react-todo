@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React from 'react';
 import ActiveQuantity from '../ActiveQuantity';
 import FilterBtns from '../FilterBtns';

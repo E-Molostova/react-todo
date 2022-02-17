@@ -1,9 +1,11 @@
-//@ts-nocheck
 import * as React from 'react';
-import { SVGProps } from 'react';
 import styled, { css } from 'styled-components';
 
-const Check = (props: SVGProps<SVGSVGElement>) => (
+interface Props {
+  dblClick: boolean;
+}
+
+const Check = (props: Props) => (
   <SVG
     xmlns="http://www.w3.org/2000/svg"
     width={20}
@@ -22,7 +24,7 @@ const Check = (props: SVGProps<SVGSVGElement>) => (
 );
 
 const SVG = styled.svg`
-  ${props =>
+  ${(props: Props) =>
     props.dblClick &&
     css`
       display: none;
