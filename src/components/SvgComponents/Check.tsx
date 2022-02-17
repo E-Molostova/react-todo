@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 interface Props {
   dblClick: boolean;
+  onClick: any;
 }
 
 const Check = (props: Props) => (

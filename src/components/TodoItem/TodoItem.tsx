@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,6 +16,15 @@ interface Props {
   completed: boolean;
 }
 
+interface Item {
+  _id: string;
+  completed: boolean;
+}
+
+interface TextStyledProps {
+  completed: boolean;
+}
+
 const TodoItem = ({ id, description, completed }: Props) => {
   const [dblClick, setDblClick] = useState(true);
   const [text, setText] = useState('');
@@ -31,7 +39,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleToggleTodo = (e: any) => {
     const id = e.currentTarget.parentNode.id;
-    const item = todos.find((todo: any) => todo._id === id);
+    const item: Item = todos.find((todo: any) => todo._id === id);
     dispatch(toggleTodo.request(id, item.completed));
     dispatch(fetchTodo.request());
   };
@@ -48,7 +56,6 @@ const TodoItem = ({ id, description, completed }: Props) => {
   };
 
   const handleEnter = (e: any) => {
-    const id = e.currentTarget.parentNode.id;
     if (e.key === 'Enter' || e.key === 'Escape') {
       setDblClick(true);
       e.preventDefault();
@@ -122,7 +129,7 @@ const TodoItemStyled = styled.li`
   }
 `;
 
-const TextStyled = styled.p`
+const TextStyled = styled.p<TextStyledProps>`
   word-break: break-word;
   padding-right: 5px;
   margin-left: 10px;

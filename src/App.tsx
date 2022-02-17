@@ -11,10 +11,10 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 const App = () => {
   return (
     <Routes>
-      <Route path="/home" element={<Homepage />}></Route>
-      <Route path="/" element={<TodosPage />}></Route>
-      <Route path="login" element={<LoginPage />}></Route>
-      <Route path="/signup" element={<RegisterPage />}></Route>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/todos" element={<TodosPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<RegisterPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
