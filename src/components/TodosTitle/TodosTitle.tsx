@@ -8,7 +8,14 @@ const TodosTitle = () => {
   const loading = useSelector(getLoading);
   return (
     <HeaderDiv>
-      {loading && <Loader />}
+      {loading && (
+        <Loader
+          width="40"
+          height="40"
+          color="tomato"
+          secondaryColor="lightgray"
+        />
+      )}
       <HeaderTitle>todos</HeaderTitle>
     </HeaderDiv>
   );

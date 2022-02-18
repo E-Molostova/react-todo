@@ -1,13 +1,8 @@
 import * as React from 'react';
-import styled, { css } from 'styled-components';
+import { SVGProps } from 'react';
 
-interface Props {
-  dblClick: boolean;
-  onClick: any;
-}
-
-const Check = (props: Props) => (
-  <SVG
+const Check = (props: SVGProps<SVGSVGElement>) => (
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     width={20}
     height={20}
@@ -21,15 +16,7 @@ const Check = (props: Props) => (
   >
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
     <path d="M22 4 12 14.01l-3-3" />
-  </SVG>
+  </svg>
 );
-
-const SVG = styled.svg`
-  ${(props: Props) =>
-    props.dblClick &&
-    css`
-      display: none;
-    `}
-`;
 
 export default Check;

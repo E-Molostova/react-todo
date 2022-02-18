@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = ({ children }: any) => {
+type Props = {
+  children: JSX.Element | JSX.Element[] | string;
+};
+
+const Container = ({ children }: Props) => {
   return <ContainerDiv>{children}</ContainerDiv>;
 };
 

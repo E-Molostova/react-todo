@@ -1,19 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { clearCompleted } from '../../redux/todos/todos-actions';
 import styled, { css } from 'styled-components';
 
 interface Props {
   isAnyCompleted: boolean;
+  handleClearCompleted?: any;
 }
 
-const ClearBtn = ({ isAnyCompleted }: Props) => {
-  const dispatch = useDispatch();
-
-  const handleClearCompleted = () => {
-    dispatch(clearCompleted.request());
-  };
-
+const ClearBtn = ({ isAnyCompleted, handleClearCompleted }: Props) => {
   return (
     <ClearBtnStyled
       type="button"

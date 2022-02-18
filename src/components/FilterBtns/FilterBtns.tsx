@@ -1,37 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchTodo, setFilter } from '../../redux/todos/todos-actions';
 import styled, { css } from 'styled-components';
 
 interface Props {
   filter: string;
   id?: string;
+  handleFilter?: any;
 }
 
-const FilterBtns = ({ filter }: Props) => {
-  const dispatch = useDispatch();
-
-  const handleFilter = (e: any) => {
-    const { id } = e.target;
-
-    switch (id) {
-      case 'All':
-        dispatch(fetchTodo.request());
-        break;
-
-      case 'Active':
-        dispatch(setFilter.active());
-        break;
-
-      case 'Completed':
-        dispatch(setFilter.completed());
-        break;
-
-      default:
-        break;
-    }
-  };
-
+const FilterBtns = ({ filter, handleFilter }: Props) => {
   return (
     <div>
       <FilterBtn

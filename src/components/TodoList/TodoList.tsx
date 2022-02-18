@@ -1,7 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getFilter, getTodos } from '../../redux/todos/todos-selectors';
-import { fetchTodo } from '../../redux/todos/todos-actions';
 import TodoItem from '../TodoItem';
 import styled from 'styled-components';
 
@@ -15,25 +14,20 @@ const TodoList = () => {
   const todos = useSelector(getTodos);
   const filter = useSelector(getFilter);
 
-  const dispatch = useDispatch();
-
   const showTodos = () => {
-    if (filter === 'all') {
-      const todosToShow = todos;
-      return todosToShow;
-    }
-    if (filter === 'active') {
-      const todosToShow = todos.filter(({ completed }) => completed === false);
-      return todosToShow;
-    }
-    if (filter === 'completed') {
-      const todosToShow = todos.filter(({ completed }) => completed === true);
-      if (todosToShow.length === 0) {
-        dispatch(fetchTodo.request());
-        const todosToShow = todos;
-        return todosToShow;
-      }
-      return todosToShow;
+    switch (filter) {
+      case 'all':
+        return todos;
+        break;
+      case 'active':
+        return todos.filter(({ completed }) => completed === false);
+        break;
+      case 'completed':
+        return todos.filter(({ completed }) => completed === true);
+        break;
+
+      default:
+        break;
     }
   };
 

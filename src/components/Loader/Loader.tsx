@@ -2,14 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Oval } from 'react-loader-spinner';
 
-const Loader = () => {
+interface Props{
+  width: string;
+  height: string;
+  color: string;
+  secondaryColor:string
+
+}
+
+const Loader = ({ width, height, color, secondaryColor }: Props) => {
   return (
     <LoaderDiv>
       <Oval
-        color="tomato"
-        secondaryColor="lightgray"
-        height={50}
-        width={50}
+        color={color}
+        secondaryColor={secondaryColor}
+        height={height}
+        width={width}
         ariaLabel="loading"
       />
     </LoaderDiv>

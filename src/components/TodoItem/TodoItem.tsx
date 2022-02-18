@@ -4,7 +4,6 @@ import {
   deleteTodo,
   editTodo,
   toggleTodo,
-  fetchTodo,
 } from '../../redux/todos/todos-actions';
 import { getTodos } from '../../redux/todos/todos-selectors';
 import { Check, Circle, DeleteBtn } from '../SvgComponents';
@@ -14,6 +13,10 @@ interface Props {
   id: string;
   description: string;
   completed: boolean;
+}
+
+interface LabelProps {
+  isEditingMode: any;
 }
 
 interface Item {
@@ -26,27 +29,24 @@ interface TextStyledProps {
 }
 
 const TodoItem = ({ id, description, completed }: Props) => {
-  const [dblClick, setDblClick] = useState(true);
+  const [isEditingMode, setIsEditingMode] = useState(true);
   const [text, setText] = useState('');
 
   const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
-  const handleDeleteTodo = (e: any) => {
-    const id = e.currentTarget.parentNode.id;
+  const handleDeleteTodo = (id: string) => {
     dispatch(deleteTodo.request(id));
   };
 
-  const handleToggleTodo = (e: any) => {
-    const id = e.currentTarget.parentNode.id;
-    const item: Item = todos.find((todo: any) => todo._id === id);
+  const handleToggleTodo = (id: string) => {
+    const item: Item = todos.find(({ _id }) => _id === id);
     dispatch(toggleTodo.request(id, item.completed));
-    dispatch(fetchTodo.request());
   };
 
   const handleEditing = (e: any) => {
     setText(e.target.textContent);
-    setDblClick(false);
+    setIsEditingMode(false);
   };
 
   const handleChangeText = (e: any) => {
@@ -57,7 +57,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   const handleEnter = (e: any) => {
     if (e.key === 'Enter' || e.key === 'Escape') {
-      setDblClick(true);
+      setIsEditingMode(true);
       e.preventDefault();
       e.stopPropagation();
     }
@@ -66,18 +66,19 @@ const TodoItem = ({ id, description, completed }: Props) => {
   const handleBlur = (e: any) => {
     const id = e.currentTarget.parentNode.id;
     dispatch(editTodo.request(id, text));
-    setDblClick(true);
+    setIsEditingMode(true);
   };
 
   return (
     <TodoItemStyled id={id}>
-      {completed ? (
-        <Check dblClick={!dblClick} onClick={handleToggleTodo} />
-      ) : (
-        <Circle dblClick={!dblClick} onClick={handleToggleTodo} />
-      )}
+      <LabelDiv
+        isEditingMode={!isEditingMode}
+        onClick={() => handleToggleTodo(id)}
+      >
+        {completed ? <Check /> : <Circle />}
+      </LabelDiv>
 
-      {dblClick ? (
+      {isEditingMode ? (
         <TextStyled
           onBlur={handleBlur}
           completed={completed}
@@ -94,8 +95,12 @@ const TodoItem = ({ id, description, completed }: Props) => {
           onBlur={handleBlur}
         />
       )}
-      {dblClick && (
-        <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
+      {isEditingMode && (
+        <button
+          onClick={() => handleDeleteTodo(id)}
+          type="button"
+          className="deleteBtn"
+        >
           <DeleteBtn />
         </button>
       )}
@@ -127,6 +132,14 @@ const TodoItemStyled = styled.li`
     opacity: 0;
     padding-right: 15px;
   }
+`;
+
+const LabelDiv = styled.div`
+  ${(props: LabelProps) =>
+    props.isEditingMode &&
+    css`
+      display: none;
+    `}
 `;
 
 const TextStyled = styled.p<TextStyledProps>`

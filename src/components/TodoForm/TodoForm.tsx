@@ -29,11 +29,10 @@ const TodoForm = () => {
       alert('Enter task description please!');
     }
     dispatch(addTodo.request(text));
-    dispatch(fetchTodo.request());
     e.currentTarget.reset();
   };
 
-  const handleAllCompleted = (e: any) => {
+  const handleAllCompleted = () => {
     dispatch(allCompleted.request());
   };
 
