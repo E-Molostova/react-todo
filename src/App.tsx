@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Homepage from './views/HomePage';
-import TodosPage from './views/TodosPage';
-import LoginPage from './views/LoginPage';
-import RegisterPage from './views/RegisterPage';
-import NotFound from './views/NotFound';
+import { mainRoutes } from './routes/mainRoutes';
 import '../src/App.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+const NotFound = lazy(
+  () => import('./views/NotFound' /* webpackChunkName: "NotFound" */),
+);
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Homepage />} />
+      {mainRoutes.map(route => (
+        <Route key={route.name} path={route.path} element={route.element} />
+      ))}
+
+      {/* <Route path="/" element={<Homepage />} />
       <Route path="/todos" element={<TodosPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<RegisterPage />} />
+      <Route path="/signup" element={<RegisterPage />} /> */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -9,7 +9,7 @@ interface Props {
 
 const FilterBtns = ({ filter, handleFilter }: Props) => {
   return (
-    <div>
+    <>
       <FilterBtn
         filter={filter}
         type="button"
@@ -35,7 +35,7 @@ const FilterBtns = ({ filter, handleFilter }: Props) => {
       >
         Completed
       </FilterBtn>
-    </div>
+    </>
   );
 };
 

@@ -35,11 +35,11 @@ const TodoItem = ({ id, description, completed }: Props) => {
   const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
-  const handleDeleteTodo = (id: string) => {
+  const handleDeleteTodo = () => {
     dispatch(deleteTodo.request(id));
   };
 
-  const handleToggleTodo = (id: string) => {
+  const handleToggleTodo = () => {
     const item: Item = todos.find(({ _id }) => _id === id);
     dispatch(toggleTodo.request(id, item.completed));
   };
@@ -71,10 +71,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
 
   return (
     <TodoItemStyled id={id}>
-      <LabelDiv
-        isEditingMode={!isEditingMode}
-        onClick={() => handleToggleTodo(id)}
-      >
+      <LabelDiv isEditingMode={!isEditingMode} onClick={handleToggleTodo}>
         {completed ? <Check /> : <Circle />}
       </LabelDiv>
 
@@ -96,11 +93,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
         />
       )}
       {isEditingMode && (
-        <button
-          onClick={() => handleDeleteTodo(id)}
-          type="button"
-          className="deleteBtn"
-        >
+        <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
           <DeleteBtn />
         </button>
       )}
