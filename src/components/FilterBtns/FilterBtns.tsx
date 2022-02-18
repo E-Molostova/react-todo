@@ -1,12 +1,14 @@
-//@ts-nocheck
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchTodo, setFilter } from '../../redux/todos/todos-actions';
 import styled, { css } from 'styled-components';
 
-type Filter = 'All' | 'Active' | 'Completed';
+interface Props {
+  filter: string;
+  id?: string;
+}
 
-const FilterBtns = ({ filter }) => {
+const FilterBtns = ({ filter }: Props) => {
   const dispatch = useDispatch();
 
   const handleFilter = (e: any) => {
@@ -74,7 +76,7 @@ const FilterBtn = styled.button`
     outline: solid 1px rgb(236, 128, 109);
   }
 
-  ${props =>
+  ${(props: Props) =>
     props.filter === props.id.toLowerCase() &&
     css`
       background-color: rgba(236, 128, 109, 0.3);
