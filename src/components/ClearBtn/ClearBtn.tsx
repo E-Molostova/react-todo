@@ -1,10 +1,13 @@
-//@ts-nocheck
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { clearCompleted } from '../../redux/todos/todos-actions';
 import styled, { css } from 'styled-components';
 
-const ClearBtn = (isAnyCompleted: any) => {
+interface Props {
+  isAnyCompleted: boolean;
+}
+
+const ClearBtn = ({ isAnyCompleted }: Props) => {
   const dispatch = useDispatch();
 
   const handleClearCompleted = () => {
@@ -34,7 +37,7 @@ const ClearBtnStyled = styled.button`
     text-decoration: underline;
   }
 
-  ${props =>
+  ${(props: Props) =>
     props.isAnyCompleted &&
     css`
       opacity: 1;
