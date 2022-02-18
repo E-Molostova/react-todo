@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../components/Container';
-import Header from '../components/Header';
+import TodosTitle from '../components/TodosTitle';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
 import FooterForm from '../components/FooterForm';
@@ -12,7 +12,7 @@ const TodosPage = () => {
 
   return (
     <Container>
-      <Header />
+      <TodosTitle />
       <TodoForm />
       <TodoList />
       {todos.length !== 0 && <FooterForm />}

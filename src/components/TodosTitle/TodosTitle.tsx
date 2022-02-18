@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Loader from '../Loader';
 import { getLoading } from '../../redux/todos/todos-selectors';
 
-const Header = () => {
+const TodosTitle = () => {
   const loading = useSelector(getLoading);
   return (
     <HeaderDiv>
@@ -26,4 +26,4 @@ const HeaderDiv = styled.div`
   justify-content: center;
 `;
 
-export default Header;
+export default TodosTitle;
