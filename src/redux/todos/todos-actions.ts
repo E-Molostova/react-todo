@@ -1,166 +1,51 @@
-import types from './todos-types';
-
-export const fetchTodo = {
-  request: () => {
-    return {
-      type: types.fetchRequest,
-    };
-  },
-  success: (data: any) => {
-    return {
-      type: types.fetchSuccess,
-      payload: data,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.fetchError,
-      payload: data,
-    };
-  },
+const createAction = (type: string) => {
+  return {
+    types: {
+      request: `todos/${type}-request`,
+      success: `todos/${type}-success`,
+      error: `todos/${type}-error`,
+    },
+    request: <T>(data1?: T, data2?: T) => {
+      return {
+        type: `todos/${type}-request`,
+        payload: {
+          description: data1,
+          data: data2,
+        },
+      };
+    },
+    success: <T>(data: T) => {
+      return {
+        type: `todos/${type}-success`,
+        payload: data,
+      };
+    },
+    error: (data: string) => {
+      return {
+        type: `todos/${type}-error`,
+        payload: data,
+      };
+    },
+  };
 };
 
-export const addTodo = {
-  request: (text: string) => {
-    return {
-      type: types.addRequest,
-      payload: {
-        description: text,
-      },
-    };
-  },
-  success: (text: string) => {
-    return {
-      type: types.addSuccess,
-      payload: text,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.addError,
-      payload: data,
-    };
-  },
-};
-
-export const deleteTodo = {
-  request: (todoId: string) => {
-    return {
-      type: types.deleteRequest,
-      payload: todoId,
-    };
-  },
-  success: (todoId: string) => {
-    return {
-      type: types.deleteSuccess,
-      payload: todoId,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.deleteError,
-      payload: data,
-    };
-  },
-};
-
-export const toggleTodo = {
-  request: (id: any, completed: boolean) => {
-    return {
-      type: types.toggleRequest,
-      payload: {
-        todoId: id,
-        completed: !completed,
-      },
-    };
-  },
-  success: (data: any) => {
-    return {
-      type: types.toggleSuccess,
-      payload: data,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.toggleError,
-      payload: data,
-    };
-  },
-};
-
-export const allCompleted = {
-  request: () => {
-    return {
-      type: types.allCompletedRequest,
-    };
-  },
-  success: (data: any) => {
-    return {
-      type: types.allCompletedSuccess,
-      payload: data,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.allCompletedError,
-      payload: data,
-    };
-  },
-};
-
-export const clearCompleted = {
-  request: () => {
-    return {
-      type: types.clearCompletedRequest,
-    };
-  },
-  success: (data: any) => {
-    return {
-      type: types.clearCompletedSuccess,
-      payload: data,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.clearCompletedError,
-      payload: data,
-    };
-  },
-};
+export const fetchTodo = createAction('fetchTodo');
+export const addTodo = createAction('addTodo');
+export const deleteTodo = createAction('deleteTodo');
+export const toggleTodo = createAction('toggleTodo');
+export const allCompleted = createAction('allCompleted');
+export const clearCompleted = createAction('clearCompleted');
+export const editTodo = createAction('editTodo');
 
 export const setFilter = {
-    active: () => {
+  active: () => {
     return {
-      type: types.setFilterActiveSuccess,
+      type: 'todos/setFilterActive',
     };
   },
   completed: () => {
     return {
-      type: types.setFilterCompletedSuccess,
-    };
-  },
-};
-
-export const editTodo = {
-  request: (id: any, description: string) => {
-    return {
-      type: types.editRequest,
-      payload: {
-        todoId: id,
-        newDescription: description,
-      },
-    };
-  },
-  success: (data: any) => {
-    return {
-      type: types.editSuccess,
-      payload: data,
-    };
-  },
-  error: (data: any) => {
-    return {
-      type: types.editError,
-      payload: data,
+      type: 'todos/setFilterCompleted',
     };
   },
 };

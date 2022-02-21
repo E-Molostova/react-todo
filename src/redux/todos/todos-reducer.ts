@@ -1,21 +1,29 @@
 import { combineReducers, AnyAction } from 'redux';
-import types from './todos-types';
+import {
+  fetchTodo,
+  addTodo,
+  deleteTodo,
+  toggleTodo,
+  allCompleted,
+  clearCompleted,
+  editTodo,
+} from './todos-actions';
 
 const todos = (state: [] = [], action: AnyAction) => {
   switch (action.type) {
-    case types.fetchSuccess:
+    case fetchTodo.types.success:
       return [...action.payload];
-    case types.addSuccess:
+    case addTodo.types.success:
       return [...action.payload];
-    case types.deleteSuccess:
+    case deleteTodo.types.success:
       return state.filter(({ _id }): any => _id !== action.payload);
-    case types.toggleSuccess:
+    case toggleTodo.types.success:
       return [...action.payload];
-    case types.allCompletedSuccess:
+    case allCompleted.types.success:
       return [...action.payload];
-    case types.clearCompletedSuccess:
+    case clearCompleted.types.success:
       return [...action.payload];
-    case types.editSuccess:
+    case editTodo.types.success:
       return [...action.payload];
 
     default:
@@ -25,46 +33,46 @@ const todos = (state: [] = [], action: AnyAction) => {
 
 const loading = (state = false, action: AnyAction) => {
   switch (action.type) {
-    case types.fetchRequest:
+    case fetchTodo.types.request:
       return (state = true);
-    case types.fetchSuccess:
+    case fetchTodo.types.success:
       return (state = false);
-    case types.fetchError:
+    case fetchTodo.types.error:
       return (state = true);
 
-    case types.addRequest:
+    case addTodo.types.request:
       return (state = true);
-    case types.addSuccess:
+    case addTodo.types.success:
       return (state = false);
-    case types.addError:
+    case addTodo.types.error:
       return (state = true);
 
-    case types.deleteRequest:
+    case deleteTodo.types.request:
       return (state = true);
-    case types.deleteSuccess:
+    case deleteTodo.types.success:
       return (state = false);
-    case types.deleteError:
+    case deleteTodo.types.error:
       return (state = true);
 
-    case types.toggleRequest:
+    case toggleTodo.types.request:
       return (state = true);
-    case types.toggleSuccess:
+    case toggleTodo.types.success:
       return (state = false);
-    case types.toggleError:
+    case toggleTodo.types.error:
       return (state = true);
 
-    case types.clearCompletedRequest:
+    case clearCompleted.types.request:
       return (state = true);
-    case types.clearCompletedSuccess:
+    case clearCompleted.types.success:
       return (state = false);
-    case types.clearCompletedError:
+    case clearCompleted.types.error:
       return (state = true);
 
-    case types.allCompletedRequest:
+    case allCompleted.types.request:
       return (state = true);
-    case types.allCompletedSuccess:
+    case allCompleted.types.success:
       return (state = false);
-    case types.allCompletedError:
+    case allCompleted.types.error:
       return (state = true);
 
     default:
@@ -74,11 +82,11 @@ const loading = (state = false, action: AnyAction) => {
 
 const filter = (state = 'all', action: AnyAction) => {
   switch (action.type) {
-    case types.fetchSuccess:
+    case fetchTodo.types.success:
       return (state = 'all');
-    case types.setFilterActiveSuccess:
+    case 'todos/setFilterActive':
       return (state = 'active');
-    case types.setFilterCompletedSuccess:
+    case 'todos/setFilterCompleted':
       return (state = 'completed');
 
     default:

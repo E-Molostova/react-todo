@@ -28,7 +28,7 @@ const TodoForm = () => {
     if (!text) {
       alert('Enter task description please!');
     }
-    dispatch(addTodo.request(text));
+    dispatch(addTodo.request<string>(text));
     e.currentTarget.reset();
   };
 

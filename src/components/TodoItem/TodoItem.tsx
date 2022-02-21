@@ -37,12 +37,12 @@ const TodoItem = ({ id, description, completed }: Props) => {
   const dispatch = useDispatch();
 
   const handleDeleteTodo = () => {
-    dispatch(deleteTodo.request(id));
+    dispatch(deleteTodo.request<string>(id));
   };
 
   const handleToggleTodo = () => {
     const item: Item = todos.find(({ _id }) => _id === id);
-    dispatch(toggleTodo.request(id, item.completed));
+    dispatch(toggleTodo.request<string | boolean>(id, item.completed));
   };
 
   const handleEditing = (e: React.SyntheticEvent) => {
@@ -55,7 +55,7 @@ const TodoItem = ({ id, description, completed }: Props) => {
     const currentTarget = e.currentTarget.parentNode as HTMLInputElement;
     const id = currentTarget.id;
     setText(e.target.value);
-    dispatch(editTodo.request(id, text));
+    dispatch(editTodo.request<string>(id, text));
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
