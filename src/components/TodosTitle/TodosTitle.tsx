@@ -21,16 +21,17 @@ const TodosTitle = () => {
   );
 };
 
+const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  
+`;
 const HeaderTitle = styled.h1`
   padding: 10px;
   font-size: 90px;
   text-align: center;
   color: rgba(175, 47, 47, 0.15);
   margin: 0;
-`;
-const HeaderDiv = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 export default TodosTitle;

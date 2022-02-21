@@ -52,6 +52,7 @@ const FooterForm = () => {
       <ClearBtn
         isAnyCompleted={isAnyCompleted}
         handleClearCompleted={handleClearCompleted}
+        title="Clear completed"
       />
     </FooterDiv>
   );

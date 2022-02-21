@@ -41,23 +41,20 @@ const TodoForm = () => {
   );
 
   return (
-    <FormStyled onSubmit={handleSubmit}>
-      <InputStyled
-        type="text"
-        autoComplete="off"
-        placeholder="What needs to be done?"
-        className="mainInput"
-        onChange={handleChange}
-      />
-      <CheckAllStyled>
-        {todos.length !== 0 && (
-          <CheckAll
-            onClick={handleAllCompleted}
-            isAllCompleted={isAllCompleted}
-          />
-        )}
+    <StyledDiv>
+      <FormStyled onSubmit={handleSubmit}>
+        <InputStyled
+          type="text"
+          autoComplete="off"
+          placeholder="What needs to be done?"
+          className="mainInput"
+          onChange={handleChange}
+        />
+      </FormStyled>
+      <CheckAllStyled onClick={handleAllCompleted}>
+        {todos.length !== 0 && <CheckAll isAllCompleted={isAllCompleted} />}
       </CheckAllStyled>
-    </FormStyled>
+    </StyledDiv>
   );
 };
 
@@ -88,10 +85,14 @@ const InputStyled = styled.input`
   }
 `;
 
+const StyledDiv = styled.div`
+  position: relative;
+`;
+
 const CheckAllStyled = styled.div`
   position: absolute;
   top: 24px;
-  left: 16px;
+  left: 330px;
 `;
 
 export default TodoForm;

@@ -2,11 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 interface Props {
-  isAnyCompleted: boolean;
+  isAnyCompleted?: boolean;
   handleClearCompleted?: any;
+  title?: string;
 }
 
-const ClearBtn = ({ isAnyCompleted, handleClearCompleted }: Props) => {
+const ClearBtn = ({ isAnyCompleted, handleClearCompleted, title }: Props) => {
   return (
     <ClearBtnStyled
       type="button"
@@ -14,7 +15,7 @@ const ClearBtn = ({ isAnyCompleted, handleClearCompleted }: Props) => {
       onClick={handleClearCompleted}
       isAnyCompleted={isAnyCompleted}
     >
-      Clear completed
+      {title}
     </ClearBtnStyled>
   );
 };
