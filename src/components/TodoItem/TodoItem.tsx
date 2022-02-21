@@ -16,7 +16,7 @@ interface Props {
 }
 
 interface LabelProps {
-  isEditingMode: any;
+  isEditingMode: boolean;
 }
 
 interface Item {
@@ -26,6 +26,7 @@ interface Item {
 
 interface TextStyledProps {
   completed: boolean;
+  onBlur?: any;
 }
 
 const TodoItem = ({ id, description, completed }: Props) => {
@@ -44,18 +45,20 @@ const TodoItem = ({ id, description, completed }: Props) => {
     dispatch(toggleTodo.request(id, item.completed));
   };
 
-  const handleEditing = (e: any) => {
-    setText(e.target.textContent);
+  const handleEditing = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLParagraphElement;
+    setText(target.textContent);
     setIsEditingMode(false);
   };
 
-  const handleChangeText = (e: any) => {
-    const id = e.currentTarget.parentNode.id;
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentTarget = e.currentTarget.parentNode as HTMLInputElement;
+    const id = currentTarget.id;
     setText(e.target.value);
     dispatch(editTodo.request(id, text));
   };
 
-  const handleEnter = (e: any) => {
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === 'Escape') {
       setIsEditingMode(true);
       e.preventDefault();
@@ -63,8 +66,9 @@ const TodoItem = ({ id, description, completed }: Props) => {
     }
   };
 
-  const handleBlur = (e: any) => {
-    const id = e.currentTarget.parentNode.id;
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentTarget = e.currentTarget.parentNode as HTMLInputElement;
+    const id = currentTarget.id;
     dispatch(editTodo.request(id, text));
     setIsEditingMode(true);
   };
@@ -140,7 +144,7 @@ const TextStyled = styled.p<TextStyledProps>`
   padding-right: 5px;
   margin-left: 10px;
 
-  ${props =>
+  ${(props: TextStyledProps) =>
     props.completed &&
     css`
       text-decoration: line-through;
