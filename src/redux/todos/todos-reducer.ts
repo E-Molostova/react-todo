@@ -8,6 +8,7 @@ import {
   clearCompleted,
   editTodo,
 } from './todos-actions';
+import { authReducer } from '../auth/auth-reducer';
 
 const todos = (state: [] = [], action: AnyAction) => {
   switch (action.type) {
@@ -98,4 +99,5 @@ export default combineReducers({
   todos,
   loading,
   filter,
+  auth: authReducer,
 });

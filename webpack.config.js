@@ -47,12 +47,18 @@ module.exports = {
     extensions: ['.js', '.json', '.wasm', '.ts', '.tsx'],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: '/public/index.html' }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
     new MiniCssExtractPlugin(),
   ],
   devServer: {
     open: true,
     port: 9000,
     historyApiFallback: true,
+  },
+
+  stats: {
+    children: true,
   },
 };

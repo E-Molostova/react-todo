@@ -1,5 +1,5 @@
 {
-  "name": "webpack-todo",
+  "name": "react-todo",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/E-Molostova/webpack-todo.git"
+    "url": "git+https://github.com/E-Molostova/react-todo.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/E-Molostova/webpack-todo/issues"
+    "url": "https://github.com/E-Molostova/react-todo/issues"
   },
-  "homepage": "https://github.com/E-Molostova/webpack-todo#readme",
+  "homepage": "https://github.com/E-Molostova/react-todo#readme",
   "devDependencies": {
     "@reduxjs/toolkit": "^1.7.2",
     "@types/jest": "^27.4.0",

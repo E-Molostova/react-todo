@@ -14,4 +14,4 @@ parserOptions:
 plugins:
   - react
   - '@typescript-eslint'
-rules: { 'semi': ['error', 'always'], 'quotes': ['error', 'double'] }
+rules: { 'semi': ['error', 'always'], 'quotes': ['error', 'double', 'single'] }
