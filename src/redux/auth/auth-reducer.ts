@@ -1,15 +1,5 @@
-import { AnyAction } from 'redux';
-import {
-  //   authRegisterRequest,
-  authRegisterSuccess,
-  //   authRegisterError,
-  //   authLoginRequest,
-  authLoginSuccess,
-  //   authLoginError,
-  //   authLogOutRequest,
-  //   authLogOutSuccess,
-  //   authLogOutError,
-} from './auth-actions';
+//@ts-nocheck
+import { registerUser, loginUser } from './auth-actions';
 import authState from '../../interfaces/AuthState';
 
 const initialState: authState = {
@@ -19,17 +9,24 @@ const initialState: authState = {
   isRefreshing: false,
 };
 
-export const authReducer = (state = initialState, action: AnyAction) => {
-  console.log(action.payload);
+export const authReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case authRegisterSuccess:
-      return (state.user = action.payload.name), (state.isLoggedIn = true);
-    case authLoginSuccess:
-      return (
-        (state.user = action.payload.name),
-        (state.token = action.payload.access_token),
-        (state.isLoggedIn = true)
-      );
+    case registerUser.types.success:
+      return {
+        ...state,
+        user: action.payload.name,
+        email: action.payload.email,
+        isLoggedIn: true,
+      };
+
+    case loginUser.types.success:
+      return {
+        ...state,
+        user: action.payload.user.name,
+        email: action.payload.user.email,
+        token: action.payload.access_token,
+        isLoggedIn: true,
+      };
 
     default:
       return state;

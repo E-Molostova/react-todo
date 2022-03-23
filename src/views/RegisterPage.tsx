@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authRegisterRequest } from '../redux/auth/auth-actions';
+import {  registerUser } from '../redux/auth/auth-actions';
 import styled from 'styled-components';
 
 const RegisterPage = () => {
@@ -27,7 +27,7 @@ const RegisterPage = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const credentials = { name, email, password };
-    dispatch(authRegisterRequest(credentials));
+    dispatch(registerUser.request<object>(credentials));
     setName('');
     setEmail('');
     setPassword('');

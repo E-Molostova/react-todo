@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authLoginRequest } from '../redux/auth/auth-actions';
+import { loginUser } from '../redux/auth/auth-actions';
 import styled from 'styled-components';
 
 export default function LoginPage() {
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(authLoginRequest({ email, password }));
+    dispatch(loginUser.request<object>({ email, password }));
     setEmail('');
     setPassword('');
   };

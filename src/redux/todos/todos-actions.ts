@@ -1,4 +1,4 @@
-const createAction = (type: string) => {
+export const createAction = (type: string) => {
   return {
     types: {
       request: `todos/${type}-request`,
