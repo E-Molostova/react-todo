@@ -3,4 +3,5 @@ export default interface authState {
   token: string;
   isLoggedIn: boolean;
   isRefreshing: boolean;
+  isRegistered: boolean;
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import HomePage from '../views/HomePage';
 import TodosPage from '../views/TodosPage';
-import LoginPage from '../views/LoginPage';
 import RegisterPage from '../views/RegisterPage';
+import LoginPage from '../views/LoginPage';
 
 const pathToHome = '/';
 const pathToTodos = '/todos';
@@ -21,13 +21,13 @@ export const mainRoutes = [
     element: <TodosPage />,
   },
   {
-    name: 'Login',
-    path: pathToLoginPage,
-    element: <LoginPage />,
-  },
-  {
     name: 'Register',
     path: pathToRegisterPage,
     element: <RegisterPage />,
+  },
+  {
+    name: 'Login',
+    path: pathToLoginPage,
+    element: <LoginPage />,
   },
 ];

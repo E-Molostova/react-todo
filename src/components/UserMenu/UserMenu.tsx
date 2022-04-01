@@ -1,11 +1,11 @@
 import React from 'react';
-// import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import authSelectors from '../../redux/auth/auth-selectors';
 import styled from 'styled-components';
+import { logoutUser } from '../../redux/auth/auth-actions';
 
 const UserMenu = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUserName);
 
   return (
@@ -13,7 +13,7 @@ const UserMenu = () => {
       <SpanStyled>Welcome, {name}</SpanStyled>
       <ButtonStyled
         type="button"
-        // onClick={() => dispatch(authOperations.logOut())}
+        onClick={() => dispatch(logoutUser.request())}
       >
         Log Out
       </ButtonStyled>

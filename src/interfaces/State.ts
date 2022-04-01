@@ -7,5 +7,6 @@ export default interface State {
     token: string;
     isLoggedIn: boolean;
     isRefreshing: boolean;
+    isRegistered: boolean;
   };
 }

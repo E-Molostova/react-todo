@@ -1,105 +1,83 @@
-//@ts-nocheck
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {  registerUser } from '../redux/auth/auth-actions';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../redux/auth/auth-actions';
+import authSelectors from '../redux/auth/auth-selectors';
+import FormikInput from '../components/FormikInput';
 import styled from 'styled-components';
+import { useFormik, FormikProvider, Field } from 'formik';
+import * as Yup from 'yup';
 
-const RegisterPage = () => {
+const SignUpForm = () => {
+  const isRegistered = useSelector(authSelectors.getIsRegistered);
+
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        return setName(value);
-      case 'email':
-        return setEmail(value);
-      case 'password':
-        return setPassword(value);
-      default:
-        return;
+  useEffect(() => {
+    if (isRegistered) {
+      return navigate('/login');
     }
-  };
+  }, [isRegistered]);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const credentials = { name, email, password };
-    dispatch(registerUser.request<object>(credentials));
-    setName('');
-    setEmail('');
-    setPassword('');
-  };
-
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(4, 'Must be 4 characters or more')
+        .required('Required'),
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string()
+        .min(6, 'Must be 6 characters or more')
+        .required('Required'),
+    }),
+    onSubmit: values => {
+      dispatch(registerUser.request<object>(values));
+    },
+  });
   return (
-    <DivForm>
-      <FormStyled onSubmit={handleSubmit} autoComplete="off">
-        <LabelStyled>
-          Name
-          <InputStyled
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-          />
-        </LabelStyled>
+    <FormikProvider value={formik}>
+      <Form
+        onSubmit={formik.handleSubmit}
+        onChange={formik.handleChange}
+        // onBlur={formik.handleBlur}
+      >
+        <Field
+          name="name"
+          component={FormikInput}
+          placeholder="Enter your name"
+        />
+        <Field
+          name="email"
+          type="email"
+          component={FormikInput}
+          placeholder="Enter email"
+        />
+        <Field
+          type="password"
+          name="password"
+          component={FormikInput}
+          placeholder="Enter password"
+        />
 
-        <LabelStyled>
-          Email
-          <InputStyled
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-          />
-        </LabelStyled>
-
-        <LabelStyled>
-          Password
-          <InputStyled
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-          />
-        </LabelStyled>
-
-        <ButtonStyled type="submit">Sign up</ButtonStyled>
-      </FormStyled>
-    </DivForm>
+        <Button type="submit">Sign Up</Button>
+      </Form>
+    </FormikProvider>
   );
 };
 
-const DivForm = styled.div`
-  display: flex;
-`;
-const FormStyled = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 320px;
   margin: 20px auto;
 `;
-const LabelStyled = styled.label`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  font-size: 14px;
-  text-align: center;
-`;
-const InputStyled = styled.input`
-  padding: 10px;
-  height: 30px;
-  border-radius: 5px;
-  &:hover,
-  &:focus {
-    border-color: blueviolet;
-    outline: none;
-  }
-`;
-const ButtonStyled = styled.button`
+const Button = styled.button`
   margin: 10auto;
   padding: 5 20;
   border: none;
@@ -107,12 +85,10 @@ const ButtonStyled = styled.button`
   background-color: #e0e4e4;
   cursor: pointer;
   height: 40px;
-
   &:hover,
   &:focus {
     color: white;
     background-color: grey;
   }
 `;
-
-export default RegisterPage;
+export default SignUpForm;

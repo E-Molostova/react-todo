@@ -1,11 +1,12 @@
 //@ts-nocheck
-import { registerUser, loginUser } from './auth-actions';
+import { registerUser, loginUser, logoutUser } from './auth-actions';
 import authState from '../../interfaces/AuthState';
 
 const initialState: authState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
+  isRegistered: false,
   isRefreshing: false,
 };
 
@@ -14,18 +15,36 @@ export const authReducer = (state = initialState, action: any) => {
     case registerUser.types.success:
       return {
         ...state,
-        user: action.payload.name,
-        email: action.payload.email,
-        isLoggedIn: true,
+        user: {
+          name: action.payload.name,
+          email: action.payload.email,
+        },
+        isLoggedIn: false,
+        isRegistered: true,
       };
 
     case loginUser.types.success:
       return {
         ...state,
-        user: action.payload.user.name,
-        email: action.payload.user.email,
+        user: {
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+        },
         token: action.payload.access_token,
         isLoggedIn: true,
+        isRegistered: true,
+      };
+
+    case logoutUser.types.success:
+      return {
+        ...state,
+        user: {
+          name: null,
+          email: null,
+        },
+        token: null,
+        isLoggedIn: false,
+        isRegistered: true,
       };
 
     default:

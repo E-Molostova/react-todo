@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HomePage = () => (
@@ -9,7 +8,6 @@ const HomePage = () => (
       <span role="img" aria-label="Иконка приветствия">
         💁‍♀️
       </span>
-      <Link to="/todos">Todos</Link>
     </Title>
   </Container>
 );
