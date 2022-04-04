@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const HomePage = () => {
-  useEffect(() => {
-    const isToken = localStorage.getItem('token');
-    console.log(isToken);
-  }, []);
-
   return (
     <Container>
       <Title>

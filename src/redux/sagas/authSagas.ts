@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { registerUser, loginUser, logoutUser } from '../auth/auth-actions';
+import Action from '../../interfaces/Action';
 
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
@@ -13,12 +14,7 @@ const token = {
   },
 };
 
-interface Action {
-  type: string;
-  payload: {
-    data?: string;
-  };
-}
+
 
 const registerUserToServer = async (action: Action) => {
   const { data } = await axios.post('/auth/register', action.payload);
@@ -58,16 +54,15 @@ function* workerLogin(action: Action) {
   }
 }
 
-const logoutUserToServer = async (action: Action) => {
-  const { data } = await axios.get('/users/logout', action.payload);
+const logoutUserToServer = async () => {
+  const { data } = await axios.get('/users/logout');
   token.unset();
   return data;
 };
 
 function* workerLogout(action: Action) {
   try {
-    const data: object = yield call(logoutUserToServer, action);
-
+    const data: object = yield call(logoutUserToServer);
     yield put(logoutUser.success<object>(data));
   } catch (e) {
     yield put(logoutUser.error(e.message));

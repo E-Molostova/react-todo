@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pathToLoginPage } from '../routes/mainRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/auth/auth-actions';
 import authSelectors from '../redux/auth/auth-selectors';
 import FormikInput from '../components/FormikInput';
-import { OpenedEye } from '../components/SvgComponents';
 import styled from 'styled-components';
 import { useFormik, FormikProvider, Field } from 'formik';
+import { getLoading } from '../redux/todos/todos-selectors';
 import * as Yup from 'yup';
 
 const SignUpForm = () => {
-  const [showHidePassword, changeShowHidePassword] = useState(false);
   const isRegistered = useSelector(authSelectors.getIsRegistered);
+  const isLoading = useSelector(getLoading);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const SignUpForm = () => {
       name: '',
       email: '',
       password: '',
+      changepassword: '',
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -37,9 +38,16 @@ const SignUpForm = () => {
       password: Yup.string()
         .min(6, 'Must be 6 characters or more')
         .required('Required'),
+      changepassword: Yup.string().when('password', {
+        is: (val: string) => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref('password')],
+          'Both password need to be the same',
+        ),
+      }),
     }),
-    onSubmit: values => {
-      dispatch(registerUser.request<object>(values));
+    onSubmit: ({ name, password, email }) => {
+      dispatch(registerUser.request<object>({ name, password, email }));
     },
   });
   return (
@@ -56,21 +64,22 @@ const SignUpForm = () => {
           component={FormikInput}
           placeholder="Enter email"
         />
-        <DivPassword>
-          <Field
-            type={showHidePassword ? 'text' : 'password'}
-            name="password"
-            component={FormikInput}
-            placeholder="Enter password"
-          />
-          <DivEye>
-            <OpenedEye
-              onClick={() => changeShowHidePassword(!showHidePassword)}
-            />
-          </DivEye>
-        </DivPassword>
+        <Field
+          name="password"
+          type="password"
+          component={FormikInput}
+          placeholder="Enter password"
+        />
+        <Field
+          name="changepassword"
+          type="password"
+          component={FormikInput}
+          placeholder="Enter passsword again"
+        />
 
-        <Button type="submit">Sign Up</Button>
+        <Button disabled={isLoading ? true : false} type="submit">
+          Sign Up
+        </Button>
       </Form>
     </FormikProvider>
   );
@@ -97,13 +106,5 @@ const Button = styled.button`
     background-color: grey;
   }
 `;
-const DivPassword = styled.div`
-  position: relative;
-`;
 
-const DivEye = styled.div`
-  position: absolute;
-  top: 13px;
-  right: 20px;
-`;
 export default SignUpForm;
