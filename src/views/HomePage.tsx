@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-const HomePage = () => (
-  <Container>
-    <Title>
-      Please log in or sign up
-      <WelcomeSpan role="img" aria-label="Иконка приветствия">
-        💁‍♀️
-      </WelcomeSpan>
-    </Title>
-  </Container>
-);
+const HomePage = () => {
+  useEffect(() => {
+    const isToken = localStorage.getItem('token');
+    console.log(isToken);
+  }, []);
+
+  return (
+    <Container>
+      <Title>
+        Please log in or sign up
+        <WelcomeSpan role="img" aria-label="Иконка приветствия">
+          💁‍♀️
+        </WelcomeSpan>
+      </Title>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   min-height: calc(100vh - 50px);

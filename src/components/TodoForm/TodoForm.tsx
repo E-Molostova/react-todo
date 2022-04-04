@@ -7,7 +7,7 @@ import {
 } from '../../redux/todos/todos-actions';
 import { getTodos } from '../../redux/todos/todos-selectors';
 import { CheckAll } from '../SvgComponents';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const TodoForm = () => {
   const [text, setText] = useState('');
@@ -27,7 +27,7 @@ const TodoForm = () => {
     if (!text) {
       alert('Enter task description please!');
     }
-    dispatch(addTodo.request<string>(text));
+    dispatch(addTodo.request<object>({ description: text }));
     e.currentTarget.reset();
   };
 
@@ -50,9 +50,9 @@ const TodoForm = () => {
           onChange={handleChange}
         />
       </Form>
-      <CheckAllStyled onClick={handleAllCompleted}>
-        {todos.length !== 0 && <CheckAll isAllCompleted={isAllCompleted} />}
-      </CheckAllStyled>
+      <CheckAllDiv onClick={handleAllCompleted} isAllCompleted={isAllCompleted}>
+        {todos.length !== 0 && <CheckAll />}
+      </CheckAllDiv>
     </Div>
   );
 };
@@ -87,10 +87,19 @@ const Input = styled.input`
   }
 `;
 
-const CheckAllStyled = styled.div`
+const CheckAllDiv = styled.div`
   position: absolute;
   top: 24px;
   left: 330px;
+  ${(props: CheckAllProps) =>
+    props.isAllCompleted &&
+    css`
+      fill: black;
+    `}
 `;
+
+interface CheckAllProps {
+  isAllCompleted?: boolean;
+}
 
 export default TodoForm;

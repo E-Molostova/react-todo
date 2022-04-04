@@ -1,21 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { pathToTodos } from '../routes/mainRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/auth/auth-actions';
 import authSelectors from '../redux/auth/auth-selectors';
 import FormikInput from '../components/FormikInput';
 import { useFormik, Field, FormikProvider } from 'formik';
+import { OpenedEye } from '../components/SvgComponents';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 
 const LoginForm = () => {
+  const [showHidePassword, changeShowHidePassword] = useState(false);
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
-      return navigate('/todos');
+      return navigate(pathToTodos);
     }
   }, [isLoggedIn]);
 
@@ -33,27 +37,31 @@ const LoginForm = () => {
 
     onSubmit: values => {
       dispatch(loginUser.request<object>(values));
+      
     },
   });
   return (
     <FormikProvider value={formik}>
-      <Form
-        onSubmit={formik.handleSubmit}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      >
+      <Form onSubmit={formik.handleSubmit}>
         <Field
           name="email"
           type="email"
           component={FormikInput}
           placeholder="Enter email"
         />
-        <Field
-          type="password"
-          name="password"
-          component={FormikInput}
-          placeholder="Enter password"
-        />
+        <DivPassword>
+          <Field
+            type={showHidePassword ? 'text' : 'password'}
+            name="password"
+            component={FormikInput}
+            placeholder="Enter password"
+          />
+          <DivEye>
+            <OpenedEye
+              onClick={() => changeShowHidePassword(!showHidePassword)}
+            />
+          </DivEye>
+        </DivPassword>
 
         <Button type="submit">Log In</Button>
       </Form>
@@ -64,8 +72,6 @@ const LoginForm = () => {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  /* justify-content: baseline; */
-  /* align-items: center; */
   width: 320px;
   margin: 10px auto;
 `;
@@ -82,6 +88,15 @@ const Button = styled.button`
     color: white;
     background-color: grey;
   }
+`;
+const DivPassword = styled.div`
+  position: relative;
+`;
+
+const DivEye = styled.div`
+  position: absolute;
+  top: 13px;
+  right: 20px;
 `;
 
 export default LoginForm;

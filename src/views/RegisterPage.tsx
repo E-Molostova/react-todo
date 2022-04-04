@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { pathToLoginPage } from '../routes/mainRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/auth/auth-actions';
 import authSelectors from '../redux/auth/auth-selectors';
 import FormikInput from '../components/FormikInput';
+import { OpenedEye } from '../components/SvgComponents';
 import styled from 'styled-components';
 import { useFormik, FormikProvider, Field } from 'formik';
 import * as Yup from 'yup';
 
 const SignUpForm = () => {
+  const [showHidePassword, changeShowHidePassword] = useState(false);
   const isRegistered = useSelector(authSelectors.getIsRegistered);
 
   const dispatch = useDispatch();
@@ -54,12 +56,19 @@ const SignUpForm = () => {
           component={FormikInput}
           placeholder="Enter email"
         />
-        <Field
-          type="password"
-          name="password"
-          component={FormikInput}
-          placeholder="Enter password"
-        />
+        <DivPassword>
+          <Field
+            type={showHidePassword ? 'text' : 'password'}
+            name="password"
+            component={FormikInput}
+            placeholder="Enter password"
+          />
+          <DivEye>
+            <OpenedEye
+              onClick={() => changeShowHidePassword(!showHidePassword)}
+            />
+          </DivEye>
+        </DivPassword>
 
         <Button type="submit">Sign Up</Button>
       </Form>
@@ -87,5 +96,14 @@ const Button = styled.button`
     color: white;
     background-color: grey;
   }
+`;
+const DivPassword = styled.div`
+  position: relative;
+`;
+
+const DivEye = styled.div`
+  position: absolute;
+  top: 13px;
+  right: 20px;
 `;
 export default SignUpForm;

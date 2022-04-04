@@ -9,23 +9,16 @@ import {
   editTodo,
 } from '../todos/todos-actions';
 import Todo from '../../interfaces/Todo';
+import Action from '../../interfaces/Action';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:8080';
-
-interface Action {
-  type: string;
-  payload: {
-    description?: string;
-    data?: string;
-  };
-}
 
 const getTodosFromServer = async () => {
   const { data } = await axios.get('/todos');
   return data;
 };
 
-function* workerFetchTodos(action: Action) {
+function* workerFetchTodos() {
   try {
     const data: Todo[] = yield call(getTodosFromServer);
     yield put(fetchTodo.success<Todo[]>(data));
@@ -54,16 +47,16 @@ const deleteTodoFromServer = async (id: string) => {
 
 function* workerDeleteTodo(action: Action) {
   try {
-    yield call(deleteTodoFromServer, action.payload.description);
-    yield put(deleteTodo.success<string>(action.payload.description));
+    yield call(deleteTodoFromServer, action.payload._id);
+    yield put(deleteTodo.success<string>(action.payload._id));
   } catch (e) {
     yield put(deleteTodo.error(e.message));
   }
 }
 
 const toggleTodoToServer = async (action: Action) => {
-  const id = action.payload.description;
-  const body = action.payload.data;
+  const id = action.payload._id;
+  const body = action.payload.completed;
   const { data } = await axios.put(`/todos/${id}`, { completed: !body });
   return data;
 };
@@ -106,8 +99,8 @@ function* workerClearTodoCompleted() {
 }
 
 const editTodoToServer = async (action: Action) => {
-  const id = action.payload.description;
-  const body = action.payload.data;
+  const id = action.payload._id;
+  const body = action.payload.description;
   const { data } = await axios.put(`/todos/${id}`, { description: body });
   return data;
 };

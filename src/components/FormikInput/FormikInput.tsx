@@ -1,25 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-
-interface Props {
-  field: {
-    name: string;
-  };
-  form: {
-    touched: any;
-    errors: any;
-    data: string;
-  };
-}
+import { FieldProps } from 'formik';
 
 const FormikInput = ({
   field,
-  form: { touched, errors, data },
+  form: { touched, errors },
   ...props
-}: Props) => {
+}: FieldProps) => {
   return (
     <>
-      <Input name={data} {...field} {...props} />
+      <Input {...field} {...props} />
 
       {touched[field.name] && errors[field.name] && (
         <DivError className="error">{errors[field.name]}</DivError>

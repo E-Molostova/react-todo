@@ -40,10 +40,19 @@ const loginUserToServer = async (action: Action) => {
   return data;
 };
 
+interface DataLogin {
+  access_token: string;
+  refresh_token: string;
+  user: {
+    name: string;
+    email: string;
+  };
+}
 function* workerLogin(action: Action) {
   try {
-    const data: object = yield call(loginUserToServer, action);
+    const data: DataLogin = yield call(loginUserToServer, action);
     yield put(loginUser.success<object>(data));
+    yield localStorage.setItem('token', data.access_token);
   } catch (e) {
     yield put(loginUser.error(e.message));
   }

@@ -14,6 +14,11 @@ const TodosPage = () => {
   const name = useSelector(authSelectors.getUserName);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const isToken = localStorage.getItem('token');
+  //   console.log(isToken);
+  // }, []);
+
   useEffect(() => {
     if (name === null) {
       return navigate(pathToHome);

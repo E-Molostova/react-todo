@@ -7,11 +7,8 @@ import rootSaga from './sagas/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-// const reducer = combineReducers({ todosReducer, authReducer });
-
 export const store = createStore(
   todosReducer,
-
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
