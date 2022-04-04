@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 const TodoForm = () => {
   const [text, setText] = useState('');
-
   const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
@@ -41,24 +40,27 @@ const TodoForm = () => {
   );
 
   return (
-    <StyledDiv>
-      <FormStyled onSubmit={handleSubmit}>
-        <InputStyled
+    <Div>
+      <Form onSubmit={handleSubmit}>
+        <Input
           type="text"
           autoComplete="off"
           placeholder="What needs to be done?"
           className="mainInput"
           onChange={handleChange}
         />
-      </FormStyled>
+      </Form>
       <CheckAllStyled onClick={handleAllCompleted}>
         {todos.length !== 0 && <CheckAll isAllCompleted={isAllCompleted} />}
       </CheckAllStyled>
-    </StyledDiv>
+    </Div>
   );
 };
 
-const FormStyled = styled.form`
+const Div = styled.div`
+  position: relative;
+`;
+const Form = styled.form`
   width: 550px;
   display: flex;
   flex-wrap: wrap;
@@ -68,7 +70,7 @@ const FormStyled = styled.form`
   position: relative;
 `;
 
-const InputStyled = styled.input`
+const Input = styled.input`
   width: 550px;
   height: 65px;
   color: rgb(77, 77, 77);
@@ -83,10 +85,6 @@ const InputStyled = styled.input`
     font-size: 22px;
     color: rgb(177, 172, 172);
   }
-`;
-
-const StyledDiv = styled.div`
-  position: relative;
 `;
 
 const CheckAllStyled = styled.div`

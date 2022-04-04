@@ -1,14 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getFilter, getTodos } from '../../redux/todos/todos-selectors';
+import Todo from '../../interfaces/Todo';
 import TodoItem from '../TodoItem';
 import styled from 'styled-components';
-
-interface Todo {
-  _id: string;
-  description: string;
-  completed: boolean;
-}
 
 const TodoList = () => {
   const todos = useSelector(getTodos);
@@ -18,14 +13,10 @@ const TodoList = () => {
     switch (filter) {
       case 'all':
         return todos;
-        break;
       case 'active':
         return todos.filter(({ completed }) => completed === false);
-        break;
       case 'completed':
         return todos.filter(({ completed }) => completed === true);
-        break;
-
       default:
         break;
     }
@@ -36,7 +27,7 @@ const TodoList = () => {
       {showTodos().map(({ _id, description, completed }: Todo) => (
         <TodoItem
           key={_id}
-          id={_id}
+          _id={_id}
           description={description}
           completed={completed}
         />

@@ -1,109 +1,87 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   deleteTodo,
   editTodo,
   toggleTodo,
 } from '../../redux/todos/todos-actions';
-import { getTodos } from '../../redux/todos/todos-selectors';
-import { Check, Circle, DeleteBtn } from '../SvgComponents';
+import Todo from '../../interfaces/Todo';
+import { Check, Circle, Close } from '../SvgComponents';
 import styled, { css } from 'styled-components';
 
-interface Props {
-  id: string;
-  description: string;
-  completed: boolean;
-}
-
-interface LabelProps {
-  isEditingMode: boolean;
-}
-
-interface Item {
-  _id: string;
-  completed: boolean;
-}
-
-interface TextStyledProps {
-  completed: boolean;
-  onBlur?: any;
-}
-
-const TodoItem = ({ id, description, completed }: Props) => {
-  const [isEditingMode, setIsEditingMode] = useState(true);
+const TodoItem = ({ _id, description, completed }: Todo) => {
+  const [isEditingMode, setIsEditingMode] = useState(false);
   const [text, setText] = useState('');
 
-  const todos = useSelector(getTodos);
   const dispatch = useDispatch();
 
   const handleDeleteTodo = () => {
-    dispatch(deleteTodo.request<string>(id));
+    dispatch(deleteTodo.request<string>(_id));
   };
 
   const handleToggleTodo = () => {
-    const item: Item = todos.find(({ _id }) => _id === id);
-    dispatch(toggleTodo.request<string | boolean>(id, item.completed));
+    dispatch(toggleTodo.request<string | boolean>(_id, completed));
   };
 
   const handleEditing = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLParagraphElement;
     setText(target.textContent);
-    setIsEditingMode(false);
+    setIsEditingMode(true);
   };
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentTarget = e.currentTarget.parentNode as HTMLInputElement;
-    const id = currentTarget.id;
     setText(e.target.value);
-    dispatch(editTodo.request<string>(id, text));
+    dispatch(editTodo.request<string>(_id, text));
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === 'Escape') {
-      setIsEditingMode(true);
+      setIsEditingMode(false);
       e.preventDefault();
       e.stopPropagation();
     }
   };
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentTarget = e.currentTarget.parentNode as HTMLInputElement;
-    const id = currentTarget.id;
-    dispatch(editTodo.request(id, text));
-    setIsEditingMode(true);
+    dispatch(editTodo.request(_id, text));
+    setIsEditingMode(false);
   };
 
   return (
-    <TodoItemStyled id={id}>
+    <TodoItemStyled>
       <LabelDiv isEditingMode={!isEditingMode} onClick={handleToggleTodo}>
         {completed ? <Check /> : <Circle />}
       </LabelDiv>
 
       {isEditingMode ? (
-        <TextStyled
-          onBlur={handleBlur}
-          completed={completed}
-          onDoubleClick={handleEditing}
-        >
-          {description}
-        </TextStyled>
-      ) : (
-        <InputStyled
+        <Input
           type="text"
           value={text}
           onChange={handleChangeText}
           onKeyDown={handleEnter}
           onBlur={handleBlur}
         />
+      ) : (
+        <Text completed={completed} onDoubleClick={handleEditing}>
+          {description}
+        </Text>
       )}
-      {isEditingMode && (
-        <button onClick={handleDeleteTodo} type="button" className="deleteBtn">
-          <DeleteBtn />
-        </button>
+      {!isEditingMode && (
+        <Button onClick={handleDeleteTodo} type="button">
+          <Close />
+        </Button>
       )}
     </TodoItemStyled>
   );
 };
+
+const Button = styled.button`
+  margin-left: auto;
+  border: none;
+  background-color: inherit;
+  opacity: 0;
+  padding-right: 15px;
+`;
 
 const TodoItemStyled = styled.li`
   display: flex;
@@ -117,42 +95,13 @@ const TodoItemStyled = styled.li`
   border-bottom: solid 1px lightgray;
   height: 100%;
 
-  &:hover .deleteBtn,
-  &:focus .deleteBtn {
+  &:hover ${Button}, &:focus ${Button} {
     opacity: 1;
     padding-right: 15px;
   }
-  .deleteBtn {
-    margin-left: auto;
-    border: none;
-    background-color: inherit;
-    opacity: 0;
-    padding-right: 15px;
-  }
 `;
 
-const LabelDiv = styled.div`
-  ${(props: LabelProps) =>
-    props.isEditingMode &&
-    css`
-      display: none;
-    `}
-`;
-
-const TextStyled = styled.p<TextStyledProps>`
-  word-break: break-word;
-  padding-right: 5px;
-  margin-left: 10px;
-
-  ${(props: TextStyledProps) =>
-    props.completed &&
-    css`
-      text-decoration: line-through;
-      color: rgb(177, 172, 172);
-    `}
-`;
-
-const InputStyled = styled.input`
+const Input = styled.input`
   width: 100%;
   padding: 15px;
   padding-left: 0;
@@ -162,6 +111,34 @@ const InputStyled = styled.input`
   box-shadow: inset 0px 0px 10px 0px gray;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+interface LabelProps {
+  isEditingMode: boolean;
+}
+const LabelDiv = styled.div`
+  ${(props: LabelProps) =>
+    !props.isEditingMode &&
+    css`
+      display: none;
+    `}
+`;
+
+interface TextStyledProps {
+  completed: boolean;
+  onBlur?: any;
+}
+const Text = styled.p<TextStyledProps>`
+  word-break: break-word;
+  padding-right: 5px;
+  margin-left: 5px;
+
+  ${(props: TextStyledProps) =>
+    props.completed &&
+    css`
+      text-decoration: line-through;
+      color: rgb(177, 172, 172);
+    `}
 `;
 
 export default TodoItem;

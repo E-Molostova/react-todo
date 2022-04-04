@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SVGProps } from 'react';
 
-const DeleteBtn = (props: SVGProps<SVGSVGElement>) => (
+const Close = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={20}
     height={20}
@@ -15,4 +15,4 @@ const DeleteBtn = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default DeleteBtn;
+export default Close;

@@ -4,10 +4,10 @@ import TodosPage from '../views/TodosPage';
 import RegisterPage from '../views/RegisterPage';
 import LoginPage from '../views/LoginPage';
 
-const pathToHome = '/';
-const pathToTodos = '/todos';
-const pathToLoginPage = '/login';
-const pathToRegisterPage = '/register';
+export const pathToHome = '/';
+export const pathToTodos = '/todos';
+export const pathToLoginPage = '/login';
+export const pathToRegisterPage = '/register';
 
 export const mainRoutes = [
   {

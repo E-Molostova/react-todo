@@ -5,6 +5,7 @@ import TodoList from '../components/TodoList';
 import FooterForm from '../components/FooterForm';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { pathToHome } from '../routes/mainRoutes';
 import { getTodos } from '../redux/todos/todos-selectors';
 import authSelectors from '../redux/auth/auth-selectors';
 
@@ -15,7 +16,7 @@ const TodosPage = () => {
 
   useEffect(() => {
     if (name === null) {
-      return navigate('/');
+      return navigate(pathToHome);
     }
   }, [name]);
 

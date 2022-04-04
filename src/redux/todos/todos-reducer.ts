@@ -8,6 +8,7 @@ import {
   clearCompleted,
   editTodo,
 } from './todos-actions';
+import { registerUser, loginUser, logoutUser } from '../auth/auth-actions';
 import { authReducer } from '../auth/auth-reducer';
 
 const todos = (state: [] = [], action: AnyAction) => {
@@ -74,6 +75,27 @@ const loading = (state = false, action: AnyAction) => {
     case allCompleted.types.success:
       return (state = false);
     case allCompleted.types.error:
+      return (state = true);
+
+    case registerUser.types.request:
+      return (state = true);
+    case registerUser.types.success:
+      return (state = false);
+    case registerUser.types.error:
+      return (state = true);
+
+    case loginUser.types.request:
+      return (state = true);
+    case loginUser.types.success:
+      return (state = false);
+    case loginUser.types.error:
+      return (state = true);
+
+    case logoutUser.types.request:
+      return (state = true);
+    case logoutUser.types.success:
+      return (state = false);
+    case logoutUser.types.error:
       return (state = true);
 
     default:

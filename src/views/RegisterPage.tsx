@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { pathToLoginPage } from '../routes/mainRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/auth/auth-actions';
 import authSelectors from '../redux/auth/auth-selectors';
@@ -16,7 +17,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     if (isRegistered) {
-      return navigate('/login');
+      return navigate(pathToLoginPage);
     }
   }, [isRegistered]);
 
@@ -41,11 +42,7 @@ const SignUpForm = () => {
   });
   return (
     <FormikProvider value={formik}>
-      <Form
-        onSubmit={formik.handleSubmit}
-        onChange={formik.handleChange}
-        // onBlur={formik.handleBlur}
-      >
+      <Form onSubmit={formik.handleSubmit}>
         <Field
           name="name"
           component={FormikInput}

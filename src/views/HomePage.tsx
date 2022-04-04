@@ -5,9 +5,9 @@ const HomePage = () => (
   <Container>
     <Title>
       Please log in or sign up
-      <span role="img" aria-label="Иконка приветствия">
+      <WelcomeSpan role="img" aria-label="Иконка приветствия">
         💁‍♀️
-      </span>
+      </WelcomeSpan>
     </Title>
   </Container>
 );
@@ -18,11 +18,13 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const Title = styled.h1`
   font-weight: 500;
   font-size: 48;
   text-align: center;
+`;
+const WelcomeSpan = styled.span`
+  font-size: 16px;
 `;
 
 export default HomePage;
