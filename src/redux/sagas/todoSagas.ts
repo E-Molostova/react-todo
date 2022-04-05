@@ -10,11 +10,10 @@ import {
 } from '../todos/todos-actions';
 import Todo from '../../interfaces/Todo';
 import Action from '../../interfaces/Action';
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8080';
+import { axiosInstance } from '../../axiosInterceptors/interceptors';
 
 const getTodosFromServer = async () => {
-  const { data } = await axios.get('/todos');
+  const { data } = await axiosInstance.get('/todos');
   return data;
 };
 
@@ -28,7 +27,7 @@ function* workerFetchTodos() {
 }
 
 const addTodoToServer = async (action: Action) => {
-  const { data } = await axios.post('/todos', action.payload);
+  const { data } = await axiosInstance.post('/todos', action.payload);
   return data;
 };
 
@@ -42,7 +41,7 @@ function* workerAddTodo(action: Action) {
 }
 
 const deleteTodoFromServer = async (id: string) => {
-  return await axios.delete(`/todos/${id}`);
+  return await axiosInstance.delete(`/todos/${id}`);
 };
 
 function* workerDeleteTodo(action: Action) {
@@ -57,7 +56,9 @@ function* workerDeleteTodo(action: Action) {
 const toggleTodoToServer = async (action: Action) => {
   const id = action.payload._id;
   const body = action.payload.completed;
-  const { data } = await axios.put(`/todos/${id}`, { completed: !body });
+  const { data } = await axiosInstance.put(`/todos/${id}`, {
+    completed: !body,
+  });
   return data;
 };
 
@@ -71,7 +72,7 @@ function* workerToggleTodo(action: Action) {
 }
 
 const allCompletedServer = async () => {
-  const { data } = await axios.put('/todos/toggle-completed');
+  const { data } = await axiosInstance.put('/todos/toggle-completed');
   return data;
 };
 
@@ -85,7 +86,7 @@ function* workerAllCompleted() {
 }
 
 const clearCompletedServer = async () => {
-  const { data } = await axios.delete('/todos/clear-completed');
+  const { data } = await axiosInstance.delete('/todos/clear-completed');
   return data;
 };
 
@@ -101,7 +102,9 @@ function* workerClearTodoCompleted() {
 const editTodoToServer = async (action: Action) => {
   const id = action.payload._id;
   const body = action.payload.description;
-  const { data } = await axios.put(`/todos/${id}`, { description: body });
+  const { data } = await axiosInstance.put(`/todos/${id}`, {
+    description: body,
+  });
   return data;
 };
 

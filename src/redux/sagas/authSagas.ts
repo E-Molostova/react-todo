@@ -1,23 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { registerUser, loginUser, logoutUser } from '../auth/auth-actions';
 import Action from '../../interfaces/Action';
-
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8080';
-
-const token = {
-  set(token: string) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = '';
-  },
-};
-
-
+import { axiosInstance } from '../../axiosInterceptors/interceptors';
 
 const registerUserToServer = async (action: Action) => {
-  const { data } = await axios.post('/auth/register', action.payload);
+  const { data } = await axiosInstance.post('/auth/register', action.payload);
   return data;
 };
 
@@ -31,8 +18,7 @@ function* workerRegister(action: Action) {
 }
 
 const loginUserToServer = async (action: Action) => {
-  const { data } = await axios.post('/auth/login', action.payload);
-  token.set(data.access_token);
+  const { data } = await axiosInstance.post('/auth/login', action.payload);
   return data;
 };
 
@@ -48,15 +34,15 @@ function* workerLogin(action: Action) {
   try {
     const data: DataLogin = yield call(loginUserToServer, action);
     yield put(loginUser.success<object>(data));
-    yield localStorage.setItem('token', data.access_token);
+    yield localStorage.setItem('access', data.access_token);
+    yield localStorage.setItem('refresh', data.refresh_token);
   } catch (e) {
     yield put(loginUser.error(e.message));
   }
 }
 
 const logoutUserToServer = async () => {
-  const { data } = await axios.get('/users/logout');
-  token.unset();
+  const { data } = await axiosInstance.get('/users/logout');
   return data;
 };
 
