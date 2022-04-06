@@ -37,12 +37,12 @@ export const editTodo = createAction('editTodo');
 export const setFilter = {
   active: () => {
     return {
-      type: 'todos/setFilterActive',
+      type: 'setFilterActive',
     };
   },
   completed: () => {
     return {
-      type: 'todos/setFilterCompleted',
+      type: 'setFilterCompleted',
     };
   },
 };

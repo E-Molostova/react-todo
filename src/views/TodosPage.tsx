@@ -3,34 +3,40 @@ import TodosTitle from '../components/TodosTitle';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
 import FooterForm from '../components/FooterForm';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { pathToHome } from '../routes/mainRoutes';
 import { getTodos } from '../redux/todos/todos-selectors';
+import { fetchCurrentUser, logoutUser } from '../redux/auth/auth-actions';
 import authSelectors from '../redux/auth/auth-selectors';
 
 const TodosPage = () => {
   const todos = useSelector(getTodos);
-  const name = useSelector(authSelectors.getUserName);
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(authSelectors.getIsRefreshing);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const isToken = localStorage.getItem('token');
-  //   console.log(isToken);
-  // }, []);
-
   useEffect(() => {
-    if (name === null) {
+    const isToken = localStorage.getItem('access');
+    console.log(isToken);
+    if (isToken) {
+      dispatch(fetchCurrentUser.request());
+    } else {
+      dispatch(logoutUser.request());
       return navigate(pathToHome);
     }
-  }, [name]);
+  }, []);
 
   return (
     <>
-      <TodosTitle />
-      <TodoForm />
-      <TodoList />
-      {todos.length !== 0 && <FooterForm />}
+      {!isRefreshing && (
+        <>
+          <TodosTitle />
+          <TodoForm />
+          <TodoList />
+          {todos.length !== 0 && <FooterForm />}
+        </>
+      )}
     </>
   );
 };

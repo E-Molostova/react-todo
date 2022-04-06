@@ -1,5 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { registerUser, loginUser, logoutUser } from '../auth/auth-actions';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  fetchCurrentUser,
+} from '../auth/auth-actions';
 import Action from '../../interfaces/Action';
 import { axiosInstance } from '../../axiosInterceptors/interceptors';
 
@@ -33,9 +38,9 @@ interface DataLogin {
 function* workerLogin(action: Action) {
   try {
     const data: DataLogin = yield call(loginUserToServer, action);
-    yield put(loginUser.success<object>(data));
     yield localStorage.setItem('access', data.access_token);
     yield localStorage.setItem('refresh', data.refresh_token);
+    yield put(loginUser.success<object>(data));
   } catch (e) {
     yield put(loginUser.error(e.message));
   }
@@ -46,7 +51,7 @@ const logoutUserToServer = async () => {
   return data;
 };
 
-function* workerLogout(action: Action) {
+function* workerLogout() {
   try {
     const data: object = yield call(logoutUserToServer);
     yield put(logoutUser.success<object>(data));
@@ -55,8 +60,23 @@ function* workerLogout(action: Action) {
   }
 }
 
+const fetchCurrentUserToServer = async () => {
+  const { data } = await axiosInstance.get('/users/current');
+  return data;
+};
+
+function* workerFetchCurrentUser() {
+  try {
+    const data: object = yield call(fetchCurrentUserToServer);
+    yield put(fetchCurrentUser.success<object>(data));
+  } catch (e) {
+    yield put(fetchCurrentUser.error(e.message));
+  }
+}
+
 export function* watchAuth() {
   yield takeEvery(registerUser.types.request, workerRegister);
   yield takeEvery(loginUser.types.request, workerLogin);
   yield takeEvery(logoutUser.types.request, workerLogout);
+  yield takeEvery(fetchCurrentUser.types.request, workerFetchCurrentUser);
 }

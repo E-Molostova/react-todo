@@ -89,7 +89,7 @@ const loading = (state = false, action: AnyAction) => {
     case loginUser.types.success:
       return (state = false);
     case loginUser.types.error:
-      return (state = true);
+      return (state = false);
 
     case logoutUser.types.request:
       return (state = true);

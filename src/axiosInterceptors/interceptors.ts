@@ -1,34 +1,41 @@
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import dayjs from 'dayjs';
-
-const access = localStorage.getItem('access');
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080',
-  headers: { Authorization: `Bearer ${access}` },
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('access')}`,
+  },
 });
-
-interface User {
-  exp: number;
-}
 
 axiosInstance.interceptors.request.use(async req => {
-  if (!access) {
-    const access = localStorage.getItem('access');
-    req.headers.Authorization = `Bearer ${access}`;
-  }
-  const refresh = localStorage.getItem('refresh');
-  const user: User = jwt_decode(access);
-  const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-
-  if (!isExpired) return req;
-
-  req.headers.Authorization = `Bearer ${refresh}`;
-  const response = await axios.post('http://localhost:8080/auth/refreshtoken');
-  console.log(response);
-  localStorage.setItem('access', response.data.accessToken);
-  localStorage.setItem('refresh', response.data.refreshToken);
-  req.headers.Authorization = `Bearer ${response.data.accessToken}`;
+  req.headers.Authorization = `Bearer ${localStorage.getItem('access')}`;
   return req;
 });
+
+axiosInstance.interceptors.response.use(
+  response => {
+    return response;
+  },
+  async error => {
+    console.log(error);
+    if (error.response) {
+      if (
+        error.message.name === 'JsonWebTokenError' ||
+        error.response.status === 401
+      ) {
+        const refresh = localStorage.getItem('refresh');
+        console.log('refresh', refresh);
+        const response = await axiosInstance.post(
+          'http://localhost:8080/auth/refreshtoken',
+          {
+            refreshToken: refresh,
+          },
+        );
+        console.log(response);
+        localStorage.setItem('access', response.data.accessToken);
+        localStorage.setItem('refresh', response.data.refreshToken);
+      }
+    }
+    return Promise.reject(error);
+  },
+);

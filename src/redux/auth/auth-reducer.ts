@@ -1,5 +1,10 @@
 //@ts-nocheck
-import { registerUser, loginUser, logoutUser } from './auth-actions';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  fetchCurrentUser,
+} from './auth-actions';
 import authState from '../../interfaces/AuthState';
 
 const initialState: authState = {
@@ -45,6 +50,29 @@ export const authReducer = (state = initialState, action: any) => {
         token: null,
         isLoggedIn: false,
         isRegistered: true,
+      };
+
+    case fetchCurrentUser.types.success:
+      return {
+        ...state,
+        user: {
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+        },
+        isRefreshing: false,
+        isLoggedIn: true,
+        isRegistered: true,
+      };
+
+    case fetchCurrentUser.types.request:
+      return {
+        ...state,
+        isRefreshing: true,
+      };
+    case fetchCurrentUser.types.error:
+      return {
+        ...state,
+        isRefreshing: false,
       };
 
     default:

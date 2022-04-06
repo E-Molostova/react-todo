@@ -1,20 +1,25 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import authSelectors from '../../redux/auth/auth-selectors';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { pathToHome } from '../../routes/mainRoutes';
 import { logoutUser } from '../../redux/auth/auth-actions';
+import styled from 'styled-components';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
   const name = useSelector(authSelectors.getUserName);
+  const navigate = useNavigate();
+
+  const handleLogoutUser = () => {
+    dispatch(logoutUser.request());
+    return navigate(pathToHome);
+  };
 
   return (
     <DivStyled>
       <SpanStyled>Welcome, {name}</SpanStyled>
-      <ButtonStyled
-        type="button"
-        onClick={() => dispatch(logoutUser.request())}
-      >
+      <ButtonStyled type="button" onClick={handleLogoutUser}>
         Log Out
       </ButtonStyled>
     </DivStyled>
