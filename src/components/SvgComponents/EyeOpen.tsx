@@ -26,4 +26,4 @@ const OpenedEye = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default OpenedEye;
+export default React.memo(OpenedEye);

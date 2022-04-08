@@ -5,15 +5,15 @@ import {
   logoutUser,
   fetchCurrentUser,
 } from '../auth/auth-actions';
-import Action from '../../interfaces/Action';
+import AuthAction from '../../interfaces/AuthAction';
 import { axiosInstance } from '../../axiosInterceptors/interceptors';
 
-const registerUserToServer = async (action: Action) => {
+const registerUserToServer = async (action: AuthAction<string>) => {
   const { data } = await axiosInstance.post('/auth/register', action.payload);
   return data;
 };
 
-function* workerRegister(action: Action) {
+function* workerRegister(action: AuthAction<string>) {
   try {
     const data: object = yield call(registerUserToServer, action);
     yield put(registerUser.success<object>(data));
@@ -22,7 +22,7 @@ function* workerRegister(action: Action) {
   }
 }
 
-const loginUserToServer = async (action: Action) => {
+const loginUserToServer = async (action: AuthAction<string>) => {
   const { data } = await axiosInstance.post('/auth/login', action.payload);
   return data;
 };
@@ -35,7 +35,7 @@ interface DataLogin {
     email: string;
   };
 }
-function* workerLogin(action: Action) {
+function* workerLogin(action: AuthAction<string>) {
   try {
     const data: DataLogin = yield call(loginUserToServer, action);
     yield localStorage.setItem('access', data.access_token);
@@ -65,9 +65,14 @@ const fetchCurrentUserToServer = async () => {
   return data;
 };
 
+interface DataCurrentUser {
+  name: string;
+  email: string;
+}
 function* workerFetchCurrentUser() {
   try {
-    const data: object = yield call(fetchCurrentUserToServer);
+    const data: DataCurrentUser = yield call(fetchCurrentUserToServer);
+
     yield put(fetchCurrentUser.success<object>(data));
   } catch (e) {
     yield put(fetchCurrentUser.error(e.message));

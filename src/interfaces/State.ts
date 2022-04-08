@@ -3,6 +3,6 @@ import authState from './AuthState';
 export default interface State {
   todos: [];
   loading: string;
-  filter: string;
+  filter: 'all' | 'completed' | 'active';
   auth: authState;
 }

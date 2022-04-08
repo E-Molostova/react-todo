@@ -1,7 +1,7 @@
 import React from 'react';
 import ActiveQuantity from '../ActiveQuantity';
 import FilterButtons from '../FilterButtons';
-import ClearButton from '../ClearButton';
+import ClearButton from '../ClearBtn';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {

@@ -7,13 +7,14 @@ import authSelectors from '../redux/auth/auth-selectors';
 import FormikInput from '../components/FormikInput';
 import { useFormik, Field, FormikProvider } from 'formik';
 import { OpenedEye } from '../components/SvgComponents';
+import Credentials from '../interfaces/Credentials';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 
 const LoginForm = () => {
   const [showHidePassword, changeShowHidePassword] = useState(false);
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,10 +37,14 @@ const LoginForm = () => {
     }),
 
     onSubmit: values => {
-      dispatch(loginUser.request<object>(values));
-      
+      dispatch(loginUser.request<Credentials>(values));
     },
   });
+
+  const handleModePassword = () => {
+    changeShowHidePassword(!showHidePassword);
+  };
+
   return (
     <FormikProvider value={formik}>
       <Form onSubmit={formik.handleSubmit}>
@@ -57,9 +62,7 @@ const LoginForm = () => {
             placeholder="Enter password"
           />
           <DivEye>
-            <OpenedEye
-              onClick={() => changeShowHidePassword(!showHidePassword)}
-            />
+            <OpenedEye onClick={handleModePassword} />
           </DivEye>
         </DivPassword>
 
