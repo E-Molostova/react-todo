@@ -67,7 +67,6 @@ const Form = styled.form`
   justify-content: center;
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.004);
-  position: relative;
 `;
 
 const Input = styled.input`
@@ -79,7 +78,6 @@ const Input = styled.input`
   outline: none;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.03) 0px -2px 1px 0px inset;
-  position: relative;
 
   &::placeholder {
     font-size: 22px;
@@ -87,6 +85,9 @@ const Input = styled.input`
   }
 `;
 
+interface CheckAllProps {
+  isAllCompleted?: boolean;
+}
 const CheckAllDiv = styled.div`
   position: absolute;
   top: 24px;
@@ -97,9 +98,5 @@ const CheckAllDiv = styled.div`
       fill: black;
     `}
 `;
-
-interface CheckAllProps {
-  isAllCompleted?: boolean;
-}
 
 export default TodoForm;

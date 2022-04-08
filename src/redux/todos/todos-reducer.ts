@@ -18,7 +18,7 @@ const todos = (state: [] = [], action: AnyAction) => {
     case addTodo.types.success:
       return [...action.payload];
     case deleteTodo.types.success:
-      return state.filter(({ _id }): any => _id !== action.payload);
+      return [...action.payload];
     case toggleTodo.types.success:
       return [...action.payload];
     case allCompleted.types.success:
@@ -107,9 +107,9 @@ const filter = (state = 'all', action: AnyAction) => {
   switch (action.type) {
     case fetchTodo.types.success:
       return (state = 'all');
-    case 'todos/setFilterActive':
+    case 'setFilterActive':
       return (state = 'active');
-    case 'todos/setFilterCompleted':
+    case 'setFilterCompleted':
       return (state = 'completed');
 
     default:

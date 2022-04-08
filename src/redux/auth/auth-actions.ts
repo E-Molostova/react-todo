@@ -1,4 +1,4 @@
-import { createAction } from '../todos/todos-actions';
+import { createAction } from '../../units/redux-tools';
 
 export const registerUser = createAction('registerUser');
 export const loginUser = createAction('loginUser');

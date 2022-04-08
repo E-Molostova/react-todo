@@ -7,7 +7,7 @@ interface Props {
   title?: string;
 }
 
-const ClearBtn = ({ isAnyCompleted, handleClearCompleted, title }: Props) => {
+const ClearButton = ({ isAnyCompleted, handleClearCompleted, title }: Props) => {
   return (
     <ClearBtnStyled
       type="button"
@@ -38,4 +38,4 @@ const ClearBtnStyled = styled.button`
     `}
 `;
 
-export default ClearBtn;
+export default ClearButton;

@@ -1,16 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { pathToLoginPage, pathToRegisterPage } from '../../routes/mainRoutes';
 import styled from 'styled-components';
 
 const AuthNav = () => {
   return (
-    <div>
-      <StyledNavLink to="/register">Registration</StyledNavLink>
-      <StyledNavLink to="/login">Log In</StyledNavLink>
-    </div>
+    <Div>
+      <StyledNavLink to={pathToRegisterPage}>Registration</StyledNavLink>
+      <StyledNavLink to={pathToLoginPage}>Log In</StyledNavLink>
+    </Div>
   );
 };
 
+const Div = styled.div``;
 const StyledNavLink = styled(NavLink)`
   display: inline-block;
   text-decoration: none;

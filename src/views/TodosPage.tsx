@@ -18,7 +18,6 @@ const TodosPage = () => {
 
   useEffect(() => {
     const isToken = localStorage.getItem('access');
-    console.log(isToken);
     if (isToken) {
       dispatch(fetchCurrentUser.request());
     } else {

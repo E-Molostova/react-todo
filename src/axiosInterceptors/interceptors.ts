@@ -17,21 +17,18 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async error => {
-    console.log(error);
     if (error.response) {
       if (
         error.message.name === 'JsonWebTokenError' ||
         error.response.status === 401
       ) {
         const refresh = localStorage.getItem('refresh');
-        console.log('refresh', refresh);
         const response = await axiosInstance.post(
           'http://localhost:8080/auth/refreshtoken',
           {
             refreshToken: refresh,
           },
         );
-        console.log(response);
         localStorage.setItem('access', response.data.accessToken);
         localStorage.setItem('refresh', response.data.refreshToken);
       }

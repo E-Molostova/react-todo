@@ -16,12 +16,12 @@ const TodoItem = ({ _id, description, completed }: Todo) => {
   const dispatch = useDispatch();
 
   const handleDeleteTodo = () => {
-    dispatch(deleteTodo.request<object>({ _id }));
+    dispatch(deleteTodo.request<Todo>({ _id }));
   };
 
   const handleToggleTodo = () => {
     const data = { _id, completed };
-    dispatch(toggleTodo.request<object>(data));
+    dispatch(toggleTodo.request<Todo>(data));
   };
 
   const handleEditing = (e: React.SyntheticEvent) => {
@@ -33,7 +33,7 @@ const TodoItem = ({ _id, description, completed }: Todo) => {
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
     const data = { _id, description: text };
-    dispatch(editTodo.request<object>(data));
+    dispatch(editTodo.request<Todo>(data));
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -44,9 +44,9 @@ const TodoItem = ({ _id, description, completed }: Todo) => {
     }
   };
 
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBlur = () => {
     const data = { _id, description: text };
-    dispatch(editTodo.request(data));
+    dispatch(editTodo.request<Todo>(data));
     setIsEditingMode(false);
   };
 

@@ -46,8 +46,9 @@ const deleteTodoFromServer = async (id: string) => {
 
 function* workerDeleteTodo(action: Action) {
   try {
-    yield call(deleteTodoFromServer, action.payload._id);
-    yield put(deleteTodo.success<string>(action.payload._id));
+    const { data } = yield call(deleteTodoFromServer, action.payload._id);
+    console.log(data);
+    yield put(deleteTodo.success<Todo[]>(data));
   } catch (e) {
     yield put(deleteTodo.error(e.message));
   }

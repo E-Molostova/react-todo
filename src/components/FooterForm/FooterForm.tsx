@@ -1,7 +1,7 @@
 import React from 'react';
 import ActiveQuantity from '../ActiveQuantity';
-import FilterBtns from '../FilterBtns';
-import ClearBtn from '../ClearBtn';
+import FilterButtons from '../FilterButtons';
+import ClearButton from '../ClearButton';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -48,8 +48,8 @@ const FooterForm = () => {
   return (
     <FooterDiv>
       <ActiveQuantity />
-      <FilterBtns filter={filter} handleFilter={handleFilter} />
-      <ClearBtn
+      <FilterButtons filter={filter} handleFilter={handleFilter} />
+      <ClearButton
         isAnyCompleted={isAnyCompleted}
         handleClearCompleted={handleClearCompleted}
         title="Clear completed"
