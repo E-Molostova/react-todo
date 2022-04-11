@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { store } from '../redux/store';
+import { logoutUser } from '../redux/auth/auth-actions';
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -31,6 +33,8 @@ axiosInstance.interceptors.response.use(
         );
         localStorage.setItem('access', response.data.accessToken);
         localStorage.setItem('refresh', response.data.refreshToken);
+      } else {
+        store.dispatch(logoutUser.request());
       }
     }
     return Promise.reject(error);
