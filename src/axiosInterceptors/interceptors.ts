@@ -21,20 +21,22 @@ axiosInstance.interceptors.response.use(
   async error => {
     if (error.response) {
       if (
-        error.message.name === 'JsonWebTokenError'
-        // error.response.status === 401
+        error.message.name === 'JsonWebTokenError' ||
+        error.response.status === 401
       ) {
-        const refresh = localStorage.getItem('refresh');
-        const response = await axiosInstance.post(
-          'http://localhost:8080/auth/refreshtoken',
-          {
-            refreshToken: refresh,
-          },
-        );
-        localStorage.setItem('access', response.data.accessToken);
-        localStorage.setItem('refresh', response.data.refreshToken);
-      } else {
-        store.dispatch(logoutUser.request());
+        try {
+          const refresh = localStorage.getItem('refresh');
+          const response = await axiosInstance.post(
+            'http://localhost:8080/auth/refreshtoken',
+            {
+              refreshToken: refresh,
+            },
+          );
+          localStorage.setItem('access', response.data.accessToken);
+          localStorage.setItem('refresh', response.data.refreshToken);
+        } catch (error) {
+          store.dispatch(logoutUser.request());
+        }
       }
     }
     return Promise.reject(error);
