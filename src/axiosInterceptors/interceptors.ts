@@ -21,8 +21,8 @@ axiosInstance.interceptors.response.use(
   async error => {
     if (error.response) {
       if (
-        error.message.name === 'JsonWebTokenError' ||
-        error.response.status === 401
+        error.message.name === 'JsonWebTokenError'
+        // error.response.status === 401
       ) {
         const refresh = localStorage.getItem('refresh');
         const response = await axiosInstance.post(
