@@ -72,7 +72,6 @@ interface DataCurrentUser {
 function* workerFetchCurrentUser() {
   try {
     const data: DataCurrentUser = yield call(fetchCurrentUserToServer);
-
     yield put(fetchCurrentUser.success<object>(data));
   } catch (e) {
     yield put(fetchCurrentUser.error(e.message));

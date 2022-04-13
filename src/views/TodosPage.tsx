@@ -24,7 +24,7 @@ const TodosPage = () => {
       dispatch(logoutUser.request());
       return navigate(pathToHome);
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
